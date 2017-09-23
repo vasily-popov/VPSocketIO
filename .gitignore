@@ -1,0 +1,20 @@
+*.xcuserstate
+*.xcbkptlist
+.DS_Store
+*.pbxuser
+xcuserdata
+Pods
+*.xccheckout
+*.gcno
+*.gcda
+*.xcscmblueprint
+Podfile.lock
+# fastlane specific
+fastlane/report.xml
+# deliver temporary files
+fastlane/Preview.html
+fastlane/README.md
+# snapshot generated screenshots
+fastlane/screenshots
+# scan temporary files
+fastlane/test_output
