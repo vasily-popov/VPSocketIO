@@ -10,6 +10,7 @@
 #define VPSocketIOClientProtocol_H
 
 #import <Foundation/Foundation.h>
+#import "VPSocketAckManager.h"
 
 typedef enum : NSUInteger {
     VPSocketIOClientStatusNotConnected = 0x1,
@@ -37,6 +38,7 @@ typedef enum : NSUInteger {
 
 @required
 
+@property (nonatomic, strong) VPSocketAckManager *ackHandlers;
 @property (nonatomic, strong, readonly) dispatch_queue_t handleQueue;
 
 -(void)handleClientEvent:(NSString*)event withData:(NSArray*)data;

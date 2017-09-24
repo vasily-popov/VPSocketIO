@@ -19,15 +19,11 @@
 
 @interface VPSocketIOClient() <VPSocketEngineClient,VPSocketParsable>
 {
-    VPSocketAckManager *ackHandlers;
-    
     int currentAck;
     int reconnectAttempts;
     int currentReconnectAttempt;
     BOOL reconnecting;
     VPSocketAnyEventHandler anyHandler;
-    
-    
 }
 
 @property (nonatomic, strong, readonly) NSString* logType;
@@ -40,6 +36,8 @@
 @end
 
 @implementation VPSocketIOClient
+
+@synthesize ackHandlers;
 
 -(instancetype)init:(NSURL*)socketURL withConfig:(NSDictionary*)config
 {

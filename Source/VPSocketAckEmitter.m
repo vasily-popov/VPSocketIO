@@ -9,6 +9,7 @@
 #import "VPSocketAckEmitter.h"
 #import "VPSocketIOClient.h"
 #import "VPSocketIOUtils.h"
+#import "VPSocketAckManager.h"
 
 
 @interface VPSocketAckEmitter()
@@ -64,18 +65,20 @@
 -(void)timingOutAfter:(double)seconds callback:(VPAckCallback)callback {
     
     if (self.socket != nil && _ackNum != -1) {
-#warning TODO
-        //socket.ackHandlers.addAck(ackNumber, callback: callback)
-        //socket._emit(items, ack: ackNumber)
         
+        [self.socket.ackHandlers addAck:_ackNum callback:callback];
+        [self.socket emitAck:_ackNum withItems:_items];
         if(seconds >0 ) {
             
+            __weak typeof(self) weakSelf = self;
+            
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(seconds * NSEC_PER_SEC)), self.socket.handleQueue, ^{
-#warning TODO
-                //self.socket.ackHandlers.timeoutAck(self.ackNum, onQueue: self.socket.handleQueue);
+                
+                __strong typeof(self) strongSelf = weakSelf;
+                if(strongSelf) {
+                    [self.socket.ackHandlers timeoutAck:strongSelf.ackNum onQueue:strongSelf.socket.handleQueue];
+                }
             });
-            
-            
         }
     }
 }

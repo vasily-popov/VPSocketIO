@@ -76,11 +76,6 @@ typedef void (^VPEngineResponseCallBack)(NSData* data, NSURLResponse*response, N
 -(void)didError:(NSString*)reason;
 /// Disconnects from the server.
 -(void)disconnect:(NSString*)reason;
-/// Called to switch from HTTP long-polling to WebSockets. After calling this method the engine will be in
-/// WebSocket mode.
-///
-/// **You shouldn't call this directly**
--(void)doFastUpgrade;
 /// Parses raw binary received from engine.io.
 -(void)parseEngineData:(NSData*)data;
 

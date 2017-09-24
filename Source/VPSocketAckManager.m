@@ -46,8 +46,7 @@
     VPSocketAck *socketAck = [self removeAckWithId:ack];
     dispatch_async(queue, ^{
         if(socketAck && socketAck.callback) {
-#warning TODO
-            //socketAck.callback(); //[SocketAckStatus.noAck.rawValue]
+            socketAck.callback(@[@"NO ACK"]);
         }
     });
 }

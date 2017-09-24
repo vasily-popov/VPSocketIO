@@ -223,13 +223,10 @@
     }
 }
 
--(void) handleBase64:(NSString*)message {
-    
+-(void) handleBase64:(NSString*)message
+{
     // binary in base64 string
-    NSString *noPrefix;
-#warning TODO
-    //let noPrefix = message[message.index(message.startIndex, offsetBy: 2)..<message.endIndex]
-    
+    NSString *noPrefix = [message substringFromIndex:2]; //remove prefix b4
     NSData *data = [[NSData alloc] initWithBase64EncodedString:noPrefix options:NSDataBase64DecodingIgnoreUnknownCharacters];
     
     if(data != nil) {
