@@ -35,6 +35,11 @@
 
 @implementation VPSocketPacket
 
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"SocketPacket {type:%lu; data: %@; id: %d; placeholders: %d; nsp: %@}", _type, _data, _id, placeholders, _nsp];
+}
+
 -(NSString *)logType {
     return @"VPSocketPacket";
 }

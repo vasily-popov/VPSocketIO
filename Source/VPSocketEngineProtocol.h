@@ -13,13 +13,13 @@
 #import <Jetfire/Jetfire.h>
 
 typedef enum : NSUInteger{
-    VPSocketEnginePacketTypeOpen = 0x1,
-    VPSocketEnginePacketTypeClose = 0x2,
-    VPSocketEnginePacketTypePing = 0x3,
-    VPSocketEnginePacketTypePong = 0x4,
-    VPSocketEnginePacketTypeMessage = 0x5,
-    VPSocketEnginePacketTypeUpgrade = 0x6,
-    VPSocketEnginePacketTypeNoop = 0x7,
+    VPSocketEnginePacketTypeOpen = 0x0,
+    VPSocketEnginePacketTypeClose = 0x1,
+    VPSocketEnginePacketTypePing = 0x2,
+    VPSocketEnginePacketTypePong = 0x3,
+    VPSocketEnginePacketTypeMessage = 0x4,
+    VPSocketEnginePacketTypeUpgrade = 0x5,
+    VPSocketEnginePacketTypeNoop = 0x6,
 } VPSocketEnginePacketType;
 
 typedef void (^VPEngineResponseCallBack)(NSData* data, NSURLResponse*response, NSError*error);
@@ -81,20 +81,8 @@ typedef void (^VPEngineResponseCallBack)(NSData* data, NSURLResponse*response, N
 ///
 /// **You shouldn't call this directly**
 -(void)doFastUpgrade;
-/// Causes any packets that were waiting for POSTing to be sent through the WebSocket. This happens because when
-/// the engine is attempting to upgrade to WebSocket it does not do any POSTing.
-///
-/// **You shouldn't call this directly**
--(void)flushWaitingForPostToWebSocket;
 /// Parses raw binary received from engine.io.
 -(void)parseEngineData:(NSData*)data;
-/// Parses a raw engine.io packet.
--(void)parseEngineMessage:(NSString*) message;
-
-
-/// Writes a message to engine.io, independent of transport.
--(void)write:(NSString*)msg withType:(VPSocketEnginePacketType)type withData:(NSArray<NSData*>*)data;
-
 
 -(NSURL*) urlPollingWithSid;
 -(NSURL*) urlWebSocketWithSid;
@@ -118,23 +106,9 @@ typedef void (^VPEngineResponseCallBack)(NSData* data, NSURLResponse*response, N
 
 -(void)doPoll;
 -(void)stopPolling;
--(void)sendPollMessage:(NSString*)message withType:(VPSocketEnginePacketType)type withData:(NSArray*)data;
 
-
--(NSURLRequest*)createRequestForPostWithPostWait;
 
 -(void)doRequest:(NSURLRequest*)request withCallback:(VPEngineResponseCallBack)callback;
--(void)doLongPoll:(NSURLRequest*)request;
--(void)flushWaitingForPost;
--(void)parsePollingMessage:(NSString*)str;
-
-@end
-
-@protocol VPSocketEngineWebsocketProtocol <NSObject>
-
--(void) sendWebSocketMessage:(NSString*)str withType:(VPSocketEnginePacketType)type withData:(NSArray*)data;
--(void) probeWebSocket;
-
 
 @end
 

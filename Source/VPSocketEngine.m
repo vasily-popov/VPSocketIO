@@ -25,7 +25,6 @@
 @end
 
 @interface VPSocketEngine()<VPSocketEnginePollableProtocol,
-                            VPSocketEngineWebsocketProtocol,
                             JFRWebSocketDelegate,
                             NSURLSessionDelegate>
 
@@ -282,8 +281,7 @@
         }
         
         urlWebSocketComponent.percentEncodedQuery = [NSString stringWithFormat:@"transport=websocket%@",queryString];
-        urlPollingComponent.percentEncodedQuery = [NSString stringWithFormat:@"transport=websocket%@&b64=1",queryString];
-        
+        urlPollingComponent.percentEncodedQuery = [NSString stringWithFormat:@"transport=polling%@&b64=1",queryString];
         _urlPolling = urlPollingComponent.URL;
         _urlWebSocket = urlWebSocketComponent.URL;
         
@@ -338,8 +336,6 @@
     }
 }
 
-
-
 #pragma mark - JFRWebSocketDelegate
 
 -(void)websocketDidConnect:(JFRWebSocket*)socket
@@ -387,15 +383,14 @@
     }
 }
 
--(void)websocketDidReceiveMessage:(JFRWebSocket*)socket text:(NSString*)text
+-(void)websocket:(JFRWebSocket*)socket didReceiveMessage:(NSString*)string
 {
-    [self parseEngineMessage:text];
+    [self parseEngineMessage:string];
 }
--(void)websocketDidReceiveData:(JFRWebSocket*)socket data:(NSData*)data
+-(void)websocket:(JFRWebSocket*)socket didReceiveData:(NSData*)data
 {
     [self parseEngineData:data];
 }
-
 
 #pragma mark - VPSocketEngineProtocol
 
@@ -415,7 +410,7 @@
         [self disconnect:@"reconnect"];
     }
     
-    [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Starting engine. Server: %@", _url] type:self.logType];
+    [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Starting engine. Server: %@", _url.absoluteString] type:self.logType];
     [DefaultSocketLogger.logger log:@"Handshaking" type:self.logType];
     
     [self resetEngine];
@@ -529,7 +524,7 @@
     for (VPProbe *waiter in _probeWait) {
         [self write:waiter.message withType:waiter.type withData:waiter.data];
     }
-    [_postWait removeAllObjects];
+    [_probeWait removeAllObjects];
     if(_postWait.count > 0) {
         [self flushWaitingForPostToWebSocket];
     }
@@ -573,9 +568,9 @@
             _connected = YES;
             _pongsMissed = 0;
             
-            NSString *upgrades = json[@"upgrades"];
+            NSArray<NSString*> *upgrades = json[@"upgrades"];
             if(upgrades != nil) {
-                upgradeWs = [upgrades containsString:@"websocket"];
+                upgradeWs = [upgrades containsObject:@"websocket"];
             }
             
             NSNumber *interval = json[@"pingInterval"];
@@ -654,7 +649,7 @@
                     [self handleNOOP];
                     break;
                 case VPSocketEnginePacketTypeMessage:
-                    [self handleMessage:message];
+                    [self handleMessage:[message substringFromIndex:1]];
                     break;
                 default:
                     [DefaultSocketLogger.logger log:@"Got unknown packet type" type:self.logType];
@@ -696,7 +691,7 @@
             
             __weak typeof(self) weakSelf = self;
             
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_pingInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_pingInterval/1000 * NSEC_PER_SEC)),_engineQueue, ^{
                 __strong typeof(self) strongSelf = weakSelf;
                 if(strongSelf) {
                     [strongSelf sendPing];
@@ -777,7 +772,7 @@
                     {
                         [strongSelf doFastUpgrade];
                     }
-                    else if (strongSelf.closed && strongSelf.polling)
+                    else if (!strongSelf.closed && strongSelf.polling)
                     {
                         [strongSelf doPoll];
                     }
@@ -801,7 +796,7 @@
     
     if(_polling && !_closed && !invalidated && !_fastUpgrade) {
         
-        [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Doing polling %@ %@", request.HTTPMethod?:@"", request] type:@"SocketEnginePolling"];
+        [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Doing polling %@ %@", request.HTTPMethod?:@"", request.URL.absoluteString] type:@"SocketEnginePolling"];
         [[session dataTaskWithRequest:request completionHandler:callback] resume];
     }
 }
@@ -857,17 +852,20 @@
         
         [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Got poll message:%@", string] type:@"SocketEnginePolling"];
         
+        NSCharacterSet* digits = [NSCharacterSet decimalDigitCharacterSet];
         VPSocketStreamReader *reader = [[VPSocketStreamReader alloc] init:string];
-#warning TODO
-        /*while reader.hasNext {
-            if let n = Int(reader.readUntilOccurence(of: ":")) {
-                parseEngineMessage(reader.read(count: n))
-            } else {
-                parseEngineMessage(str)
-                break
+        
+        while ([reader hasNext]) {
+            
+            NSString *count = [reader readUntilOccurence:@":"];
+            if ([count rangeOfCharacterFromSet:digits].location != NSNotFound) {
+                [self parseEngineMessage:[reader read:(int)count.integerValue]];
+            }
+            else {
+                [self parseEngineMessage:string];
+                break;
             }
         }
-         */
     }
 }
 
@@ -885,7 +883,7 @@
             }
         }
     }
-    if(waitingForPost) {
+    if(!waitingForPost) {
         [self flushWaitingForPost];
     }
 }

@@ -108,7 +108,7 @@
 -(void) connectWithTimeoutAfter:(double)timeout withHandler:(VPSocketHandler)handler
 {
     if(_status != VPSocketIOClientStatusConnected) {
-        _status = VPSocketIOClientStatusConnecting;
+        self.status = VPSocketIOClientStatusConnecting;
         
         if (_engine == nil || _forceNew) {
             [self addEngine];
@@ -230,7 +230,7 @@
         [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Disconnected: %@", reason] type:self.logType];
         
         reconnecting = NO;
-        _status = VPSocketIOClientStatusDisconnected;
+        self.status = VPSocketIOClientStatusDisconnected;
         
         // Make sure the engine is actually dead.
         [_engine disconnect:reason];
@@ -438,7 +438,9 @@
         
         [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Handling event: %@ with data: %@", event, data] type:self.logType];
         
-        anyHandler([[VPSocketAnyEvent alloc] initWithEvent: event andItems: data]);
+        if(anyHandler) {
+            anyHandler([[VPSocketAnyEvent alloc] initWithEvent: event andItems: data]);
+        }
         
         for (VPSocketEventHandler *hdl in _handlers)
         {
@@ -467,7 +469,7 @@
 -(void) didConnect:(NSString*) namespace
 {
     [DefaultSocketLogger.logger log:@"Socket connected" type:self.logType];
-    _status = VPSocketIOClientStatusConnected;
+    self.status = VPSocketIOClientStatusConnected;
     [self handleClientEvent: [self eventToString:VPSocketClientEventConnect]
                    withData:@[namespace]];
 }
@@ -529,9 +531,10 @@
 
 -(void) _engineDidClose:(NSString*)reason {
     
+    [_waitingPackets removeAllObjects];
     if (_status != VPSocketIOClientStatusDisconnected)
     {
-        _status = VPSocketIOClientStatusNotConnected;
+        self.status = VPSocketIOClientStatusNotConnected;
     }
     
     if (_status == VPSocketIOClientStatusDisconnected || !_reconnects)
@@ -585,9 +588,6 @@
         if(packet) {
         
             [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Decoded packet as: %@", packet.description] type:@"SocketParser"];
-#warning packet description
-            //TODO packet.description
-            
             [self handlePacket:packet];
         }
         else {
@@ -632,7 +632,7 @@
     if ([packetType rangeOfCharacterFromSet:digits].location != NSNotFound) {
         VPPacketType type = [packetType integerValue];
         if(![reader hasNext]) {
-            return [[VPSocketPacket alloc] init:type nsp:@"/" placeholders:-1];
+            return [[VPSocketPacket alloc] init:type nsp:@"/" placeholders:0];
         }
         
         NSString *namespace = @"/";
@@ -673,8 +673,8 @@
                 }
             }
         }
-#warning packet description
-        NSString *dataArray;// = String(message.utf16[message.utf16.index(reader.currentIndex, offsetBy: 1)..<message.utf16.endIndex])!
+        
+        NSString *dataArray = [message substringFromIndex:reader.currentIndex+1];
         
         if (type == VPPacketTypeError && ![dataArray hasPrefix:@"["] && ![dataArray hasSuffix:@"]"])
         {
