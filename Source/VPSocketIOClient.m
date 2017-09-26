@@ -13,7 +13,7 @@
 #import "VPSocketPacket.h"
 #import "VPSocketAckManager.h"
 #import "DefaultSocketLogger.h"
-#import "VPSocketStringReader.h"
+#import "VPStringReader.h"
 #import "NSString+VPSocketIO.h"
 
 typedef enum : NSUInteger {
@@ -133,13 +133,18 @@ typedef enum : NSUInteger {
         if(timeout > 0)
         {
             __weak typeof(self) weakSelf = self;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)), _handleQueue, ^{
-                
-                __strong typeof(self) strongSelf = weakSelf;
-                if(strongSelf != nil && (strongSelf.status == VPSocketIOClientStatusConnecting || strongSelf.status == VPSocketIOClientStatusNotConnected)) {
-                    strongSelf.status = VPSocketIOClientStatusDisconnected;
-                    [strongSelf.engine disconnect:@"Connect timeout"];
-                    handler();
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)), _handleQueue, ^
+            {
+                @autoreleasepool
+                {
+                    __strong typeof(self) strongSelf = weakSelf;
+                    if(strongSelf != nil &&
+                       (strongSelf.status == VPSocketIOClientStatusConnecting || strongSelf.status == VPSocketIOClientStatusNotConnected))
+                    {
+                        strongSelf.status = VPSocketIOClientStatusDisconnected;
+                        [strongSelf.engine disconnect:@"Connect timeout"];
+                        handler();
+                    }
                 }
             });
         }
@@ -236,19 +241,17 @@ typedef enum : NSUInteger {
 -(void) addEngine
 {
     [DefaultSocketLogger.logger log:@"Adding engine" type:self.logType];
-    if(_engine && _engine.engineQueue != NULL)
+    if(_engine)
     {
-        dispatch_sync(_engine.engineQueue, ^{
-            _engine.client = nil;
-        });
+        [_engine syncResetClient];
     }
     _engine = [[VPSocketEngine alloc] initWithClient: self url: _socketURL options: _config];
 }
 
--(OnAckCallback*) createOnAck:(NSArray*)items
+-(VPSocketOnAckCallback*) createOnAck:(NSArray*)items
 {
     currentAck += 1;
-    return [[OnAckCallback alloc] initAck:currentAck items:items socket:self];
+    return [[VPSocketOnAckCallback alloc] initAck:currentAck items:items socket:self];
 }
 
 
@@ -286,7 +289,7 @@ typedef enum : NSUInteger {
 }
 
 /// Sends a message to the server, requesting an ack.
--(OnAckCallback*) emitWithAck:(NSString*)event items:(NSArray*)items
+-(VPSocketOnAckCallback*) emitWithAck:(NSString*)event items:(NSArray*)items
 {
     NSMutableArray *array = [NSMutableArray arrayWithObject:event];
     [array addObjectsFromArray:items];
@@ -329,6 +332,17 @@ typedef enum : NSUInteger {
     if(![_nsp isEqualToString: @"/"]) {
         [_engine send:@"1\(nsp)" withData: @[]];
         _nsp = @"/";
+    }
+}
+
+/// Joins `namespace`.
+-(void) joinNamespace:(NSString*) namespace
+{
+    _nsp = namespace;
+    if(![_nsp isEqualToString: @"/"])
+    {
+        [DefaultSocketLogger.logger log:@"Joining namespace" type:self.logType];
+        [_engine send:@"0\(nsp)" withData: @[]];
     }
 }
 
@@ -434,11 +448,14 @@ typedef enum : NSUInteger {
             [self connect];
             
             __weak typeof(self) weakSelf = self;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_reconnectWait * NSEC_PER_SEC)), _handleQueue, ^{
-                
-                __strong typeof(self) strongSelf = weakSelf;
-                if(strongSelf != nil) {
-                    [strongSelf _tryReconnect];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_reconnectWait * NSEC_PER_SEC)), _handleQueue, ^
+            {
+                @autoreleasepool
+                {
+                    __strong typeof(self) strongSelf = weakSelf;
+                    if(strongSelf != nil) {
+                        [strongSelf _tryReconnect];
+                    }
                 }
             });
         }
@@ -508,26 +525,19 @@ typedef enum : NSUInteger {
     [self handleClientEvent:eventStrings[@(VPSocketClientEventError)] withData:@[reason]];
 }
 
-/// Joins `namespace`.
--(void) joinNamespace:(NSString*) namespace
-{
-    _nsp = namespace;
-    if(![_nsp isEqualToString: @"/"])
-    {
-        [DefaultSocketLogger.logger log:@"Joining namespace" type:self.logType];
-        [_engine send:@"0\(nsp)" withData: @[]];
-    }
-}
-
 #pragma mark - VPSocketEngineClient
 
 -(void) engineDidError:(NSString*)reason {
     
     __weak typeof(self) weakSelf = self;
-    dispatch_async(_handleQueue, ^{
-        __strong typeof(self) strongSelf = weakSelf;
-        if(strongSelf) {
-            [strongSelf _engineDidError:reason];
+    dispatch_async(_handleQueue, ^
+    {
+        @autoreleasepool
+        {
+            __strong typeof(self) strongSelf = weakSelf;
+            if(strongSelf) {
+                [strongSelf _engineDidError:reason];
+            }
         }
     });
 }
@@ -545,10 +555,14 @@ typedef enum : NSUInteger {
 -(void)engineDidClose:(NSString*)reason
 {
     __weak typeof(self) weakSelf = self;
-    dispatch_async(_handleQueue, ^{
-        __strong typeof(self) strongSelf = weakSelf;
-        if(strongSelf) {
-            [strongSelf _engineDidClose:reason];
+    dispatch_async(_handleQueue, ^
+    {
+        @autoreleasepool
+        {
+            __strong typeof(self) strongSelf = weakSelf;
+            if(strongSelf) {
+                [strongSelf _engineDidClose:reason];
+            }
         }
     });
 }
@@ -579,9 +593,12 @@ typedef enum : NSUInteger {
     __weak typeof(self) weakSelf = self;
     dispatch_async(_handleQueue, ^
     {
-        __strong typeof(self) strongSelf = weakSelf;
-        if(strongSelf) {
-            [strongSelf parseSocketMessage:msg];
+        @autoreleasepool
+        {
+            __strong typeof(self) strongSelf = weakSelf;
+            if(strongSelf) {
+                [strongSelf parseSocketMessage:msg];
+            }
         }
     });
 }
@@ -591,9 +608,12 @@ typedef enum : NSUInteger {
 {
     __weak typeof(self) weakSelf = self;
     dispatch_async(_handleQueue, ^{
-        __strong typeof(self) strongSelf = weakSelf;
-        if(strongSelf) {
-            [strongSelf parseBinaryData:data];
+        @autoreleasepool
+        {
+            __strong typeof(self) strongSelf = weakSelf;
+            if(strongSelf) {
+                [strongSelf parseBinaryData:data];
+            }
         }
     });
 }
@@ -650,7 +670,7 @@ typedef enum : NSUInteger {
 -(VPSocketPacket*)parseString:(NSString*)message
 {
     NSCharacterSet* digits = [NSCharacterSet decimalDigitCharacterSet];
-    VPSocketStringReader *reader = [[VPSocketStringReader alloc] init:message];
+    VPStringReader *reader = [[VPStringReader alloc] init:message];
     
     NSString *packetType = [reader read:1];
     if ([packetType rangeOfCharacterFromSet:digits].location != NSNotFound) {
@@ -722,6 +742,8 @@ typedef enum : NSUInteger {
     }
     return nil;
 }
+
+#pragma mark - handle packet
 
 -(BOOL) isCorrectNamespace:(NSString*) nsp
 {

@@ -10,10 +10,10 @@
 #define VPSocketIOClientProtocol_H
 
 #import <Foundation/Foundation.h>
-#import "VPSocketAckManager.h"
-
+@class VPSocketAckManager;
 @class VPSocketAckEmitter;
 
+typedef void (^VPScoketAckArrayCallback)(NSArray*array);
 typedef void (^VPSocketOnEventCallback)(NSArray*array, VPSocketAckEmitter*emitter);
 
 @protocol VPSocketIOClientProtocol <NSObject>

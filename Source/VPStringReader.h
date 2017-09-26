@@ -1,5 +1,5 @@
 //
-//  VPSocketStremReader.h
+//  VPStringReader.h
 //  VPSocketIO
 //
 //  Created by Vasily Popov on 9/23/17.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface VPSocketStringReader : NSObject
+@interface VPStringReader : NSObject
 
 @property (nonatomic, strong, readonly) NSString *message;
 @property (nonatomic) int currentIndex;

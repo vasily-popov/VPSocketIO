@@ -8,22 +8,12 @@
 
 #import "VPSocketEngine.h"
 #import "NSString+VPSocketIO.h"
-#import "VPSocketStringReader.h"
+#import "VPStringReader.h"
 #import "DefaultSocketLogger.h"
+#import "VPSocketEngine+Private.h"
+#import "VPSocketEngine+EnginePollable.h"
+#import "VPSocketEngine+EngineWebsocket.h"
 #import <Jetfire/Jetfire.h>
-
-typedef enum : NSUInteger{
-    VPSocketEnginePacketTypeOpen = 0x0,
-    VPSocketEnginePacketTypeClose = 0x1,
-    VPSocketEnginePacketTypePing = 0x2,
-    VPSocketEnginePacketTypePong = 0x3,
-    VPSocketEnginePacketTypeMessage = 0x4,
-    VPSocketEnginePacketTypeUpgrade = 0x5,
-    VPSocketEnginePacketTypeNoop = 0x6,
-} VPSocketEnginePacketType;
-
-typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*response, NSError*error);
-
 
 @interface VPProbe : NSObject
 
@@ -37,12 +27,8 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
 
 @end
 
-@interface VPSocketEngine()<VPSocketEnginePollableProtocol,
-                            JFRWebSocketDelegate,
+@interface VPSocketEngine()<JFRWebSocketDelegate,
                             NSURLSessionDelegate>
-{
-    NSDictionary *stringEnginePacketType;
-}
 @property (nonatomic, strong, readonly) NSString* logType;
 
 @property (nonatomic) BOOL closed;
@@ -52,20 +38,9 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
 @property (nonatomic, strong) NSMutableDictionary *connectParams;
 @property (nonatomic, strong) NSMutableDictionary*extraHeaders;
 @property (nonatomic, strong) dispatch_queue_t engineQueue;
-@property (nonatomic) BOOL fastUpgrade;
 
-@property (nonatomic) BOOL polling;
-@property (nonatomic) BOOL forcePolling;
-@property (nonatomic) BOOL forceWebsockets;
-@property (nonatomic) BOOL probing;
-
-@property (nonatomic, strong) NSString *sid;
 @property (nonatomic, strong) NSString *socketPath;
-@property (nonatomic, strong) NSURL *urlPolling;
 @property (nonatomic, strong) NSURL *urlWebSocket;
-
-@property (nonatomic) BOOL websocket;
-@property (nonatomic, strong) JFRWebSocket* ws;
 
 @property (nonatomic, weak) id<NSURLSessionDelegate> sessionDelegate;
 @property (nonatomic, strong) NSURL *url;
@@ -81,16 +56,13 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
 @property (nonatomic, strong) JFRSecurity* security;
 @property (nonatomic, strong) NSMutableArray<VPProbe*>* probeWait;
 
-@property (nonatomic, strong) NSMutableArray<NSString*>* postWait;
-
 
 @end
 
 
 @implementation VPSocketEngine
 
-@synthesize waitingForPoll, waitingForPost, invalidated, session, client;
-
+@synthesize client;
 
 -(instancetype)initWithClient:(id<VPSocketEngineClient>)client url:(NSURL*)url options:(NSDictionary*)config
 {
@@ -176,9 +148,9 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
 -(void)setup {
     _engineQueue = dispatch_queue_create("com.socketio.engineHandleQueue", NULL);
     _postWait = [[NSMutableArray alloc] init];
-    waitingForPoll = NO;
-    waitingForPost = NO;
-    invalidated = NO;
+    _waitingForPoll = NO;
+    _waitingForPost = NO;
+    _invalidated = NO;
     _closed = NO;
     _compress = NO;
     _connected = NO;
@@ -199,13 +171,13 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
     _secure = NO;
     _selfSigned = NO;
     
-    stringEnginePacketType =@{ @(VPSocketEnginePacketTypeOpen) : @"open",
-                               @(VPSocketEnginePacketTypeClose) : @"close",
-                               @(VPSocketEnginePacketTypePing) : @"ping",
-                               @(VPSocketEnginePacketTypePong) : @"pong",
-                               @(VPSocketEnginePacketTypeMessage) : @"message",
-                               @(VPSocketEnginePacketTypeUpgrade) : @"upgrade",
-                               @(VPSocketEnginePacketTypeNoop) : @"noop"
+    _stringEnginePacketType = @{ @(VPSocketEnginePacketTypeOpen) : @"open",
+                                 @(VPSocketEnginePacketTypeClose) : @"close",
+                                 @(VPSocketEnginePacketTypePing) : @"ping",
+                                 @(VPSocketEnginePacketTypePong) : @"pong",
+                                 @(VPSocketEnginePacketTypeMessage) : @"message",
+                                 @(VPSocketEnginePacketTypeUpgrade) : @"upgrade",
+                                 @(VPSocketEnginePacketTypeNoop) : @"noop"
                                };
 }
 
@@ -231,47 +203,6 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
     _pingTimeout = pingTimeout;
     _pongsMissedMax = (int)(_pingTimeout/(_pingInterval> 0 ? _pingTimeout: 25000));
 }
-
-
-#pragma mark - private methods
-
--(void) checkAndHandleEngineError:(NSString*) message
-{
-    NSDictionary *dict = [message toDictionary];
-    if (dict != nil) {
-        NSString *error = dict[@"message"];
-        if(error != nil) {
-            [self didError: error];
-        }
-    }
-    else {
-        [client engineDidError:[NSString stringWithFormat:@"Got unknown error from server %@", message]];
-    }
-}
-
--(void) handleBase64:(NSString*)message
-{
-    // binary in base64 string
-    NSString *noPrefix = [message substringFromIndex:2]; //remove prefix b4
-    NSData *data = [[NSData alloc] initWithBase64EncodedString:noPrefix options:NSDataBase64DecodingIgnoreUnknownCharacters];
-    
-    if(data != nil) {
-        [client parseEngineBinaryData:data];
-    }
-}
-
--(void) closeOutEngine:(NSString*)reason
-{
-    _sid = @"";
-    _closed = YES;
-    invalidated = YES;
-    _connected = NO;
-    
-    [_ws disconnect];
-    [self stopPolling];
-    [client engineDidClose:reason];
-}
-
 
 -(void) createURLs
 {
@@ -311,6 +242,7 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
     }
 }
 
+#pragma mark - create websocket
 
 -(void) createWebSocketAndConnect
 {
@@ -337,91 +269,26 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
     [_ws connect];
 }
 
-
-#pragma mark - VPSocketEngineWebsocketProtocol
-
--(void) sendWebSocketMessage:(NSString*)message withType:(VPSocketEnginePacketType)type withData:(NSArray*)datas
-{
-    [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Sending ws: %@ as type:%@", message, stringEnginePacketType[@(type)]] type:@"SocketEngineWebSocket"];
-    
-    [_ws writeString:[NSString stringWithFormat:@"%lu%@",type, message]];
-    if(_websocket) {
-        for (NSData *data in datas) {
-            NSData *binData = [self createBinaryDataForSend:data];
-            [_ws writeData:binData];
-        }
-    }
-}
--(void) probeWebSocket
-{
-    if([_ws isConnected]) {
-        [self sendWebSocketMessage:@"probe" withType:VPSocketEnginePacketTypePing withData:@[]];
-    }
-}
-
-#pragma mark - JFRWebSocketDelegate
-
--(void)websocketDidConnect:(JFRWebSocket*)socket
-{
-    if(!_forceWebsockets)
-    {
-        _probing = YES;
-        [self probeWebSocket];
-    }
-    else
-    {
-        _connected = YES;
-        _probing = NO;
-        _polling = NO;
-    }
-}
--(void)websocketDidDisconnect:(JFRWebSocket*)socket error:(NSError*)error
-{
-    _probing = NO;
-    
-    if(_closed)
-    {
-        [client engineDidClose:@"Disconnect"];
-    }
-    else
-    {
-        if(_websocket) {
-            [self flushProbeWait];
-        }
-        else
-        {
-            _connected = NO;
-            _websocket = NO;
-            
-            NSString *reason = error.localizedDescription;
-            if(reason.length > 0)
-            {
-                [self didError:reason];
-            }
-            else
-            {
-                [client engineDidClose:@"Socket Disconnected"];
-            }
-        }
-    }
-}
-
--(void)websocket:(JFRWebSocket*)socket didReceiveMessage:(NSString*)string
-{
-    [self parseEngineMessage:string];
-}
--(void)websocket:(JFRWebSocket*)socket didReceiveData:(NSData*)data
-{
-    [self parseEngineData:data];
-}
-
 #pragma mark - VPSocketEngineProtocol
+
+-(void)syncResetClient
+{
+    if(_engineQueue != NULL) {
+        dispatch_sync(_engineQueue, ^{
+            self.client = nil;
+        });
+    }
+}
 
 #pragma mark - connect
 - (void)connect {
     
-    dispatch_async(_engineQueue, ^{
-        [self _connect];
+    dispatch_async(_engineQueue, ^
+    {
+        @autoreleasepool
+        {
+            [self _connect];
+        }
     });
 }
 
@@ -463,19 +330,33 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
     return components.URL;
 }
 
--(void)didError:(NSString*)reason
-{
-    [DefaultSocketLogger.logger error:reason type:self.logType];
-    [client engineDidError:reason];
-    [self disconnect:reason];
+-(void)resetEngine {
+    
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    queue.underlyingQueue = _engineQueue;
+    _closed = NO;
+    _connected = NO;
+    _fastUpgrade = NO;
+    _polling = YES;
+    _probing = NO;
+    _invalidated = NO;
+    _session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:_sessionDelegate delegateQueue:queue];
+    _sid = @"";
+    _waitingForPoll = NO;
+    _waitingForPost = NO;
+    _websocket = NO;
 }
 
 #pragma mark - disconnect
 
 -(void) disconnect:(NSString*)reason
 {
-    dispatch_async(_engineQueue, ^{
-        [self _disconnect:reason];
+    dispatch_async(_engineQueue, ^
+    {
+        @autoreleasepool
+        {
+            [self _disconnect:reason];
+        }
     });
 }
 
@@ -495,41 +376,56 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
     [self closeOutEngine:reason];
 }
 
-// We need to take special care when we're polling that we send it ASAP
-// Also make sure we're on the engineQueue since we're touching postWait
--(void) disconnectPolling
+#pragma mark - private methods
+
+-(void)didError:(NSString*)reason
 {
-    [_postWait addObject: [NSString stringWithFormat:@"%lu", VPSocketEnginePacketTypeClose]];
-    [self doRequest:[self createRequestForPostWithPostWait] withCallback:nil];
+    [DefaultSocketLogger.logger error:reason type:self.logType];
+    [client engineDidError:reason];
+    [self disconnect:reason];
 }
 
-- (NSURLRequest *)createRequestForPostWithPostWait
+-(void) checkAndHandleEngineError:(NSString*) message
 {
-    NSMutableString* postStr = [NSMutableString string];;
-    for (NSString *packet in _postWait) {
-        [postStr appendFormat:@"%ld:%@",packet.length, packet];
+    NSDictionary *dict = [message toDictionary];
+    if (dict != nil) {
+        NSString *error = dict[@"message"];
+        if(error != nil) {
+            [self didError: error];
+        }
     }
-    
-    [_postWait removeAllObjects];
-    
-    [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Created POST string:%@", postStr] type:@"SocketEnginePolling"];
-    
-    
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[self urlPollingWithSid]];
-    NSData *postData =[postStr dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
-    
-    [self addHeaders:req];
-    
-    req.HTTPMethod = @"POST";
-    [req setValue:@"text/plain; charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
-    req.HTTPBody = postData;
-    [req setValue:[NSString stringWithFormat:@"%lu", (unsigned long)postData.length] forHTTPHeaderField:@"Content-Length"];
-    return req;
+    else {
+        [client engineDidError:[NSString stringWithFormat:@"Got unknown error from server %@", message]];
+    }
 }
+
+-(void) handleBase64:(NSString*)message
+{
+    // binary in base64 string
+    NSString *noPrefix = [message substringFromIndex:2]; //remove prefix b4
+    NSData *data = [[NSData alloc] initWithBase64EncodedString:noPrefix options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    
+    if(data != nil) {
+        [client parseEngineBinaryData:data];
+    }
+}
+
+-(void) closeOutEngine:(NSString*)reason
+{
+    _sid = @"";
+    _closed = YES;
+    _invalidated = YES;
+    _connected = NO;
+    
+    [_ws disconnect];
+    [self stopPolling];
+    [client engineDidClose:reason];
+}
+
 
 -(void) doFastUpgrade
 {
-    if (waitingForPoll) {
+    if (_waitingForPoll) {
         [DefaultSocketLogger.logger error:@"Outstanding poll when switched to WebSockets, we'll probably disconnect soon. You should report this." type:self.logType];
     }
     
@@ -563,6 +459,59 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
     
     [_postWait removeAllObjects];
 }
+
+#pragma mark - parse engine
+
+/// Parses raw binary received from engine.io.
+-(void) parseEngineData:(NSData*)data
+{
+    [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Got binary data:%@",data] type:self.logType];
+    [client parseEngineBinaryData:[data subdataWithRange:NSMakeRange(1, data.length-1)]];
+}
+
+/// Parses a raw engine.io packet.
+-(void)parseEngineMessage:(NSString*)message
+{
+    [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Got message:%@",message] type:self.logType];
+    
+    VPStringReader *reader = [[VPStringReader alloc] init:message];
+    
+    if([message hasPrefix:@"b4"]) {
+        [self handleBase64:message];
+    }
+    else {
+        NSCharacterSet* digits = [NSCharacterSet decimalDigitCharacterSet];
+        NSString *currentType = [reader currentCharacter];
+        if ([currentType rangeOfCharacterFromSet:digits].location != NSNotFound) {
+            VPSocketEnginePacketType type = [currentType intValue];
+            switch (type) {
+                case VPSocketEnginePacketTypeOpen:
+                    [self handleOpen:[message substringFromIndex:1]];
+                    break;
+                case VPSocketEnginePacketTypeClose:
+                    [self handleClose:message];
+                    break;
+                case VPSocketEnginePacketTypePong:
+                    [self handlePong:message];
+                    break;
+                case VPSocketEnginePacketTypeNoop:
+                    [self handleNOOP];
+                    break;
+                case VPSocketEnginePacketTypeMessage:
+                    [self handleMessage:[message substringFromIndex:1]];
+                    break;
+                default:
+                    [DefaultSocketLogger.logger log:@"Got unknown packet type" type:self.logType];
+                    break;
+            }
+        }
+        else {
+            [self checkAndHandleEngineError:message];
+        }
+    }
+}
+
+#pragma mark - handle messages
 
 -(void) handleClose:(NSString*)reason
 {
@@ -635,73 +584,6 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
     }
 }
 
-/// Parses raw binary received from engine.io.
--(void) parseEngineData:(NSData*)data
-{
-    [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Got binary data:%@",data] type:self.logType];
-    [client parseEngineBinaryData:[data subdataWithRange:NSMakeRange(1, data.length-1)]];
-}
-
-
-/// Parses a raw engine.io packet.
--(void)parseEngineMessage:(NSString*)message
-{
-    [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Got message:%@",message] type:self.logType];
-    
-    VPSocketStringReader *reader = [[VPSocketStringReader alloc] init:message];
-    
-    if([message hasPrefix:@"b4"]) {
-        [self handleBase64:message];
-    }
-    else {
-        NSCharacterSet* digits = [NSCharacterSet decimalDigitCharacterSet];
-        NSString *currentType = [reader currentCharacter];
-        if ([currentType rangeOfCharacterFromSet:digits].location != NSNotFound) {
-            VPSocketEnginePacketType type = [currentType intValue];
-            switch (type) {
-                case VPSocketEnginePacketTypeOpen:
-                    [self handleOpen:[message substringFromIndex:1]];
-                    break;
-                case VPSocketEnginePacketTypeClose:
-                    [self handleClose:message];
-                    break;
-                case VPSocketEnginePacketTypePong:
-                    [self handlePong:message];
-                    break;
-                case VPSocketEnginePacketTypeNoop:
-                    [self handleNOOP];
-                    break;
-                case VPSocketEnginePacketTypeMessage:
-                    [self handleMessage:[message substringFromIndex:1]];
-                    break;
-                default:
-                    [DefaultSocketLogger.logger log:@"Got unknown packet type" type:self.logType];
-                    break;
-            }
-        }
-        else {
-            [self checkAndHandleEngineError:message];
-        }
-    }
-}
-
--(void)resetEngine {
-    
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    queue.underlyingQueue = _engineQueue;
-    _closed = NO;
-    _connected = NO;
-    _fastUpgrade = NO;
-    _polling = YES;
-    _probing = NO;
-    invalidated = NO;
-    session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:_sessionDelegate delegateQueue:queue];
-    _sid = @"";
-    waitingForPoll = NO;
-    waitingForPost = NO;
-    _websocket = NO;
-}
-
 -(void) sendPing
 {
     if(_connected && _pingInterval > 0) {
@@ -714,10 +596,14 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
             
             __weak typeof(self) weakSelf = self;
             
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_pingInterval/1000 * NSEC_PER_SEC)),_engineQueue, ^{
-                __strong typeof(self) strongSelf = weakSelf;
-                if(strongSelf) {
-                    [strongSelf sendPing];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_pingInterval/1000 * NSEC_PER_SEC)),_engineQueue, ^
+            {
+                @autoreleasepool
+                {
+                    __strong typeof(self) strongSelf = weakSelf;
+                    if(strongSelf) {
+                        [strongSelf sendPing];
+                    }
                 }
             });
         }
@@ -738,183 +624,31 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
 {
     dispatch_async(_engineQueue, ^
     {
-        if(self.connected)
+        @autoreleasepool
         {
-            if(self.websocket)
+            if(self.connected)
             {
-                [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Writing ws: %@ has data: %@", msg, data.count>0?@"true":@"false"] type:self.logType];
-                [self sendWebSocketMessage:msg withType:type withData:data];
-            }
-            else if (!self.probing)
-            {
-                [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Writing poll:%@ has data: %@", msg, data.count>0?@"true":@"false"] type:self.logType];
-                [self sendPollMessage:msg withType:type withData:data];
-            }
-            else
-            {
-                VPProbe *probe = [[VPProbe alloc] init];
-                probe.message = msg;
-                probe.type = type;
-                probe.data = data;
-                [self.probeWait addObject:probe];
-            }
-        }
-    });
-}
-
-
-
-- (void)doLongPoll:(NSURLRequest *)request {
-    waitingForPoll = YES;
-    
-    __weak typeof(self) weakSelf = self;
-    
-    [self doRequest:request withCallback:^(NSData *data, NSURLResponse *response, NSError *error)
-    {
-        __strong typeof(self) strongSelf = weakSelf;
-        if(strongSelf)
-        {
-            if(strongSelf.polling)
-            {
-                if(error != nil || data == nil)
+                if(self.websocket)
                 {
-                    NSString *errorString = error.localizedDescription.length > 0?error.localizedDescription:@"Error";
-                    [DefaultSocketLogger.logger error:errorString type:@"SocketEnginePolling"];
-                    [strongSelf didError:errorString];
+                    [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Writing ws: %@ has data: %@", msg, data.count>0?@"true":@"false"] type:self.logType];
+                    [self sendWebSocketMessage:msg withType:type withData:data];
+                }
+                else if (!self.probing)
+                {
+                    [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Writing poll:%@ has data: %@", msg, data.count>0?@"true":@"false"] type:self.logType];
+                    [self sendPollMessage:msg withType:type withData:data];
                 }
                 else
                 {
-                    [DefaultSocketLogger.logger log:@"Got polling response" type:@"SocketEnginePolling"];
-                    NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                    if(str)
-                    {
-                        [strongSelf parsePollingMessage:str];
-                    }
-                    strongSelf.waitingForPoll = NO;
-                    if(strongSelf.fastUpgrade)
-                    {
-                        [strongSelf doFastUpgrade];
-                    }
-                    else if (!strongSelf.closed && strongSelf.polling)
-                    {
-                        [strongSelf doPoll];
-                    }
+                    VPProbe *probe = [[VPProbe alloc] init];
+                    probe.message = msg;
+                    probe.type = type;
+                    probe.data = data;
+                    [self.probeWait addObject:probe];
                 }
             }
         }
-    }];
-}
-
-- (void)doPoll {
-    
-    if( !_websocket && !waitingForPoll && _connected && !_closed)
-    {
-        NSMutableURLRequest*request =  [[NSMutableURLRequest alloc] initWithURL:[self urlPollingWithSid]];
-        [self addHeaders:request];
-        [self doLongPoll:request];
-    }
-}
-
-- (void)doRequest:(NSURLRequest *)request withCallback:(EngineURLSessionDataTaskCallBack)callback {
-    
-    if(_polling && !_closed && !invalidated && !_fastUpgrade) {
-        
-        [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Doing polling %@ %@", request.HTTPMethod?:@"", request.URL.absoluteString] type:@"SocketEnginePolling"];
-        [[session dataTaskWithRequest:request completionHandler:callback] resume];
-    }
-}
-
-- (void)flushWaitingForPost
-{
-    if(_postWait.count > 0 && _connected)
-    {
-        if(_websocket)
-        {
-            [self flushWaitingForPostToWebSocket];
-        }
-        else
-        {
-            NSURLRequest *request =  [self createRequestForPostWithPostWait];
-            waitingForPost = YES;
-            
-            [DefaultSocketLogger.logger log:@"POSTing" type:@"SocketEnginePolling"];
-            
-            __weak typeof(self) weakSelf = self;
-            [self doRequest:request withCallback:^(NSData *data, NSURLResponse *response, NSError *error)
-            {
-                __strong typeof(self) strongSelf = weakSelf;
-                if(strongSelf)
-                {
-                    if(error != nil)
-                    {
-                        NSString *errorString = error.localizedDescription.length > 0?error.localizedDescription:@"Error";
-                        [DefaultSocketLogger.logger error:errorString type:@"SocketEnginePolling"];
-                        if (strongSelf.polling)
-                        {
-                            [strongSelf didError:errorString];
-                        }
-                    }
-                    else
-                    {
-                        strongSelf.waitingForPost = NO;
-                        if(!strongSelf.fastUpgrade)
-                        {
-                            [strongSelf flushWaitingForPost];
-                            [strongSelf doPoll];
-                        }
-                    }
-                }
-            }];
-        }
-    }
-}
-
-- (void)parsePollingMessage:(NSString *)string {
-    
-    if(string.length > 0) {
-        
-        [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Got poll message:%@", string] type:@"SocketEnginePolling"];
-        
-        NSCharacterSet* digits = [NSCharacterSet decimalDigitCharacterSet];
-        VPSocketStringReader *reader = [[VPSocketStringReader alloc] init:string];
-        
-        while ([reader hasNext]) {
-            
-            NSString *count = [reader readUntilOccurence:@":"];
-            if ([count rangeOfCharacterFromSet:digits].location != NSNotFound) {
-                [self parseEngineMessage:[reader read:(int)count.integerValue]];
-            }
-            else {
-                [self parseEngineMessage:string];
-                break;
-            }
-        }
-    }
-}
-
-- (void)sendPollMessage:(NSString *)message withType:(VPSocketEnginePacketType)type withData:(NSArray *)array {
-    
-    [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Sending poll: %@ as type:%@", message, stringEnginePacketType[@(type)]] type:@"SocketEnginePolling"];
-    
-    [_postWait addObject:[NSString stringWithFormat:@"%lu%@", type,message]];
-    
-    if(!_websocket) {
-        for (NSData *data in array) {
-            NSString *stringToSend = [self createBinaryStringDataForSend:data];
-            if(stringToSend) {
-                [_postWait addObject:stringToSend];
-            }
-        }
-    }
-    if(!waitingForPost) {
-        [self flushWaitingForPost];
-    }
-}
-
-- (void)stopPolling {
-    waitingForPoll = NO;
-    waitingForPost = NO;
-    [session finishTasksAndInvalidate];
+    });
 }
 
 - (void)addHeaders:(NSMutableURLRequest *)request {
@@ -930,27 +664,8 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
     }
 }
 
--(NSString*)createBinaryStringDataForSend:(NSData *)data  {
-    return [NSString stringWithFormat:@"b4%@", [data base64EncodedStringWithOptions:0]];
-}
-
-- (NSData*)createBinaryDataForSend:(NSData *)data {
-    
-    const Byte byte = 0x4;
-    NSMutableData *byteData = [NSMutableData dataWithBytes:&byte length:sizeof(Byte)];
-    [byteData appendData:data];
-    return  byteData;
-}
-
 - (void)send:(NSString *)msg withData:(NSArray<NSData *> *)data {
     [self write:msg withType:VPSocketEnginePacketTypeMessage withData:data];
-}
-
-- (NSURL *)urlPollingWithSid {
-    NSURLComponents *components = [NSURLComponents componentsWithURL:_urlPolling resolvingAgainstBaseURL:NO];
-    NSString *sidComponent = [NSString stringWithFormat:@"&sid=%@", _sid!= nil?[_sid urlEncode]:@""];
-    components.percentEncodedQuery = [NSString stringWithFormat:@"%@%@", components.percentEncodedQuery,sidComponent];
-    return components.URL;
 }
 
 #pragma mark - NSURLSessionDelegate
@@ -959,6 +674,62 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
 {
     [DefaultSocketLogger.logger error:@"Engine URLSession became invalid" type:self.logType];
     [self didError:@"Engine URLSession became invalid"];
+}
+
+#pragma mark - JFRWebSocketDelegate
+
+-(void)websocketDidConnect:(JFRWebSocket*)socket
+{
+    if(!_forceWebsockets)
+    {
+        _probing = YES;
+        [self probeWebSocket];
+    }
+    else
+    {
+        _connected = YES;
+        _probing = NO;
+        _polling = NO;
+    }
+}
+-(void)websocketDidDisconnect:(JFRWebSocket*)socket error:(NSError*)error
+{
+    _probing = NO;
+    
+    if(_closed)
+    {
+        [client engineDidClose:@"Disconnect"];
+    }
+    else
+    {
+        if(_websocket) {
+            [self flushProbeWait];
+        }
+        else
+        {
+            _connected = NO;
+            _websocket = NO;
+            
+            NSString *reason = error.localizedDescription;
+            if(reason.length > 0)
+            {
+                [self didError:reason];
+            }
+            else
+            {
+                [client engineDidClose:@"Socket Disconnected"];
+            }
+        }
+    }
+}
+
+-(void)websocket:(JFRWebSocket*)socket didReceiveMessage:(NSString*)string
+{
+    [self parseEngineMessage:string];
+}
+-(void)websocket:(JFRWebSocket*)socket didReceiveData:(NSData*)data
+{
+    [self parseEngineData:data];
 }
 
 @end

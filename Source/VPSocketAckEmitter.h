@@ -16,10 +16,3 @@
 
 @end
 
-
-@interface OnAckCallback : NSObject
-
--(instancetype)initAck:(int)ack items:(NSArray*)items socket:(id<VPSocketIOClientProtocol>)socket;
--(void)timingOutAfter:(double)seconds callback:(VPScoketAckArrayCallback)callback;
-
-@end

@@ -11,8 +11,6 @@
 
 @interface VPSocketEngine : NSObject<VPSocketEngineProtocol>
 
-@property (nonatomic, strong, readonly) dispatch_queue_t engineQueue;
-
 /// Creates a new engine.
 -(instancetype)initWithClient:(id<VPSocketEngineClient>)client url:(NSURL*)url options:(NSDictionary*)options;
 

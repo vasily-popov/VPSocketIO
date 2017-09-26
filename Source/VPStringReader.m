@@ -1,18 +1,14 @@
 //
-//  VPSocketStremReader.m
+//  VPStringReader.m
 //  VPSocketIO
 //
 //  Created by Vasily Popov on 9/23/17.
 //  Copyright © 2017 Vasily Popov. All rights reserved.
 //
 
-#import "VPSocketStringReader.h"
+#import "VPStringReader.h"
 
-@interface VPSocketStringReader()
-
-@end
-
-@implementation VPSocketStringReader
+@implementation VPStringReader
 
 -(instancetype)init:(NSString*)message {
     self = [super init];

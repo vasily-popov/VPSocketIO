@@ -7,13 +7,7 @@
 //
 
 #import "VPSocketAckManager.h"
-
-@interface VPSocketAck()
-
-@property (nonatomic) int ack;
-@property (nonatomic, strong) VPScoketAckArrayCallback callback;
-
-@end
+#import "VPSocketAck.h"
 
 @interface VPSocketAckManager()
 {
@@ -41,9 +35,13 @@
 -(void)executeAck:(int)ack withItems:(NSArray*)items onQueue:(dispatch_queue_t)queue
 {
     VPSocketAck *socketAck = [self removeAckWithId:ack];
-    dispatch_async(queue, ^{
-        if(socketAck && socketAck.callback) {
-            socketAck.callback(items);
+    dispatch_async(queue, ^
+    {
+        @autoreleasepool
+        {
+            if(socketAck && socketAck.callback) {
+                socketAck.callback(items);
+            }
         }
     });
     
@@ -51,9 +49,13 @@
 -(void)timeoutAck:(int)ack onQueue:(dispatch_queue_t)queue
 {
     VPSocketAck *socketAck = [self removeAckWithId:ack];
-    dispatch_async(queue, ^{
-        if(socketAck && socketAck.callback) {
-            socketAck.callback(@[@"NO ACK"]);
+    dispatch_async(queue, ^
+    {
+        @autoreleasepool
+        {
+            if(socketAck && socketAck.callback) {
+                socketAck.callback(@[@"NO ACK"]);
+            }
         }
     });
 }
@@ -70,25 +72,6 @@
     [acks removeObject:socketAck];
     dispatch_semaphore_signal(ackSemaphore);
     return socketAck;
-}
-
-@end
-
-@implementation VPSocketAck
-
--(instancetype)initWithAck:(int)ack andCallBack:(VPScoketAckArrayCallback)callback
-{
-    self = [super init];
-    if(self) {
-        self.ack = ack;
-        self.callback = callback;
-    }
-    return self;
-}
-
-- (NSUInteger)hash
-{
-    return _ack;
 }
 
 @end

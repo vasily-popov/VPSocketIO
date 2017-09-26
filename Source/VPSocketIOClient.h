@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "VPSocketAckEmitter.h"
 #import "VPSocketAnyEvent.h"
+#import "VPSocketOnAckCallback.h"
 #import "VPSocketIOClientProtocol.h"
 
 typedef enum : NSUInteger {
@@ -41,7 +42,7 @@ typedef void (^VPSocketAnyEventHandler)(VPSocketAnyEvent*event);
 -(void) reconnect;
 -(void) removeAllHandlers;
 
--(OnAckCallback*) emitWithAck:(NSString*)event items:(NSArray*)items;
+-(VPSocketOnAckCallback*) emitWithAck:(NSString*)event items:(NSArray*)items;
 
 -(NSUUID*) on:(NSString*)event callback:(VPSocketOnEventCallback) callback;
 -(NSUUID*) once:(NSString*)event callback:(VPSocketOnEventCallback) callback;
