@@ -21,9 +21,6 @@
 
 @interface VPSocketAck : NSObject
 
-@property (nonatomic) int ack;
-@property (nonatomic, strong) VPAckCallback callback;
-
 -(instancetype)initWithAck:(int)ack andCallBack:(VPAckCallback)callback;
 
 @end

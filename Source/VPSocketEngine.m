@@ -34,7 +34,9 @@
 @property (nonatomic) BOOL compress;
 @property (nonatomic) BOOL connected;
 @property (nonatomic, strong) NSMutableArray<NSHTTPCookie*>* cookies;
+@property (nonatomic, strong) NSMutableDictionary *connectParams;
 @property (nonatomic, strong) NSMutableDictionary*extraHeaders;
+@property (nonatomic, strong) dispatch_queue_t engineQueue;
 @property (nonatomic) BOOL fastUpgrade;
 
 @property (nonatomic) BOOL polling;

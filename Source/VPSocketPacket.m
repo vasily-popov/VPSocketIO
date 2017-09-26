@@ -124,7 +124,6 @@
             [DefaultSocketLogger.logger error:@"Error creating JSON object in SocketPacket.completeMessage" type:self.logType];
             return [NSString stringWithFormat:@"%@[]", message];
         }
-        
     }
     else {
         return [NSString stringWithFormat:@"%@[]", message];
@@ -193,7 +192,7 @@
     
     NSMutableArray *binary = [NSMutableArray array];
     NSArray *parsedData =  nil;
-    
+#warning TODO
     VPPacketType type = [self findType:binary.count ack: ack];
     return [[VPSocketPacket alloc] init:type data:parsedData id:id nsp:nsp placeholders:0 binary:binary];
     

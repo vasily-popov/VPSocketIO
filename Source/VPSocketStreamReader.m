@@ -28,9 +28,12 @@
 }
 
 -(NSString*)currentCharacter {
-    unichar character =  [_message characterAtIndex:_currentIndex];
+    if(_currentIndex >=0 && _currentIndex< _message.length) {
+        unichar character =  [_message characterAtIndex:_currentIndex];
     
-    return [[NSString alloc] initWithBytes:&character length:sizeof(unichar) encoding:NSUTF8StringEncoding];
+        return [[NSString alloc] initWithBytes:&character length:sizeof(unichar) encoding:NSUTF8StringEncoding];
+    }
+    return nil;
     
 }
 

@@ -8,6 +8,13 @@
 
 #import "VPSocketAckManager.h"
 
+@interface VPSocketAck()
+
+@property (nonatomic) int ack;
+@property (nonatomic, strong) VPAckCallback callback;
+
+@end
+
 @interface VPSocketAckManager()
 {
     NSMutableSet<VPSocketAck*>*acks;
@@ -66,7 +73,6 @@
 }
 
 @end
-
 
 @implementation VPSocketAck
 

@@ -50,11 +50,7 @@ typedef void (^VPEngineResponseCallBack)(NSData* data, NSURLResponse*response, N
 @property (nonatomic, readonly) BOOL closed;
 @property (nonatomic, readonly) BOOL connected;
 
-@property (nonatomic, strong) NSDictionary* connectParams;
-@property (nonatomic, strong, readonly) NSArray<NSHTTPCookie*>* cookies;
 @property (nonatomic, strong, readonly) dispatch_queue_t engineQueue;
-
-@property (nonatomic, strong, readonly) NSDictionary* extraHeaders;
 
 @property (nonatomic, readonly) BOOL fastUpgrade;
 @property (nonatomic, readonly) BOOL forcePolling;
@@ -62,27 +58,14 @@ typedef void (^VPEngineResponseCallBack)(NSData* data, NSURLResponse*response, N
 @property (nonatomic, readonly) BOOL polling;
 @property (nonatomic, readonly) BOOL probing;
 @property (nonatomic, strong, readonly) NSString* sid;
-@property (nonatomic, strong, readonly) NSString* socketPath;
-@property (nonatomic, strong, readonly) NSURL* urlPolling;
-
-@property (nonatomic, strong, readonly) NSURL* urlWebSocket;
 /// If `true`, then the engine is currently in WebSockets mode.
 @property (nonatomic, readonly) BOOL websocket;
 @property (nonatomic, strong, readonly) JFRWebSocket* ws;
 
 /// Starts the connection to the server.
 -(void)connect;
-/// Called when an error happens during execution. Causes a disconnection.
--(void)didError:(NSString*)reason;
 /// Disconnects from the server.
 -(void)disconnect:(NSString*)reason;
-/// Parses raw binary received from engine.io.
--(void)parseEngineData:(NSData*)data;
-
--(NSURL*) urlPollingWithSid;
--(NSURL*) urlWebSocketWithSid;
-
--(void)addHeaders:(NSMutableURLRequest *)request;
 
 -(void)send:(NSString*)msg withData:(NSArray<NSData*>*) data;
 

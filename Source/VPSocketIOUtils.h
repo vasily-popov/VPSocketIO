@@ -10,7 +10,6 @@
 #define VPSocketIOUtils_H
 
 #import <Foundation/Foundation.h>
-#import "VPSocketEngineProtocol.h"
 
 @class VPSocketAckEmitter;
 @class VPSocketAnyEvent;
