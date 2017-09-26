@@ -33,7 +33,24 @@
 }
 
 -(void)socketExample{
+    NSString *urlString = @"http://localhost:8900";
+    socket = [[VPSocketIOClient alloc] init:[NSURL URLWithString:urlString]
+                                 withConfig:@{@"log": @YES
+                                              }];
     
+    
+    
+    [socket on:@"256" callback:^(NSArray *array, VPSocketAckEmitter *emitter) {
+        NSLog(@"!!!!socket connected");
+    }];
+    
+    [socket on:@"startGame" callback:^(NSArray *data, VPSocketAckEmitter *emitter) {
+        if(data.count > 0)
+        {
+        }
+    }];
+    
+    [socket connect];
     
 }
 
