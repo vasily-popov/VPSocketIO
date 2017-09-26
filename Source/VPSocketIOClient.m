@@ -73,7 +73,7 @@ typedef enum : NSUInteger {
             id value = [self.config valueForKey:key];
             if([key isEqualToString:@"reconnects"])
             {
-                _reconnects = value;
+                _reconnects = [value boolValue];
             }
             if([key isEqualToString:@"reconnectAttempts"])
             {
@@ -102,7 +102,7 @@ typedef enum : NSUInteger {
             
             if([key isEqualToString:@"forceNew"])
             {
-                _forceNew = value;
+                _forceNew = [value boolValue];
             }
 
         }

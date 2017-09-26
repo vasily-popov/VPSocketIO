@@ -473,39 +473,42 @@
 {
     [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Got message:%@",message] type:self.logType];
     
-    VPStringReader *reader = [[VPStringReader alloc] init:message];
-    
-    if([message hasPrefix:@"b4"]) {
-        [self handleBase64:message];
-    }
-    else {
-        NSCharacterSet* digits = [NSCharacterSet decimalDigitCharacterSet];
-        NSString *currentType = [reader currentCharacter];
-        if ([currentType rangeOfCharacterFromSet:digits].location != NSNotFound) {
-            VPSocketEnginePacketType type = [currentType intValue];
-            switch (type) {
-                case VPSocketEnginePacketTypeOpen:
-                    [self handleOpen:[message substringFromIndex:1]];
-                    break;
-                case VPSocketEnginePacketTypeClose:
-                    [self handleClose:message];
-                    break;
-                case VPSocketEnginePacketTypePong:
-                    [self handlePong:message];
-                    break;
-                case VPSocketEnginePacketTypeNoop:
-                    [self handleNOOP];
-                    break;
-                case VPSocketEnginePacketTypeMessage:
-                    [self handleMessage:[message substringFromIndex:1]];
-                    break;
-                default:
-                    [DefaultSocketLogger.logger log:@"Got unknown packet type" type:self.logType];
-                    break;
-            }
+    if(message.length > 0)
+    {
+        VPStringReader *reader = [[VPStringReader alloc] init:message];
+        
+        if([message hasPrefix:@"b4"]) {
+            [self handleBase64:message];
         }
         else {
-            [self checkAndHandleEngineError:message];
+            NSCharacterSet* digits = [NSCharacterSet decimalDigitCharacterSet];
+            NSString *currentType = [reader currentCharacter];
+            if ([currentType rangeOfCharacterFromSet:digits].location != NSNotFound) {
+                VPSocketEnginePacketType type = [currentType intValue];
+                switch (type) {
+                    case VPSocketEnginePacketTypeOpen:
+                        [self handleOpen:[message substringFromIndex:1]];
+                        break;
+                    case VPSocketEnginePacketTypeClose:
+                        [self handleClose:message];
+                        break;
+                    case VPSocketEnginePacketTypePong:
+                        [self handlePong:message];
+                        break;
+                    case VPSocketEnginePacketTypeNoop:
+                        [self handleNOOP];
+                        break;
+                    case VPSocketEnginePacketTypeMessage:
+                        [self handleMessage:[message substringFromIndex:1]];
+                        break;
+                    default:
+                        [DefaultSocketLogger.logger log:@"Got unknown packet type" type:self.logType];
+                        break;
+                }
+            }
+            else {
+                [self checkAndHandleEngineError:message];
+            }
         }
     }
 }

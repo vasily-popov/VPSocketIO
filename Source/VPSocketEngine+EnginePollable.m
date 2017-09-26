@@ -28,7 +28,21 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
          {
              if(strongSelf.polling)
              {
-                 if(error != nil || data == nil)
+                 NSInteger status = 200;
+                 if([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                     status = ((NSHTTPURLResponse*)response).statusCode;
+                     if(status/100 != 2 && error == nil) {
+                         NSString *errorString = [NSHTTPURLResponse localizedStringForStatusCode:status];
+                         if(errorString.length > 0)
+                         {
+                             error = [NSError errorWithDomain:@"VPSocketEngine"
+                                                         code:status
+                                                     userInfo:@{NSLocalizedDescriptionKey:errorString}];
+                         }
+                     }
+                 }
+                 
+                 if(error != nil || data == nil || (status/100 != 2))
                  {
                      NSString *errorString = error.localizedDescription.length > 0?error.localizedDescription:@"Error";
                      [DefaultSocketLogger.logger error:errorString type:@"SocketEnginePolling"];
