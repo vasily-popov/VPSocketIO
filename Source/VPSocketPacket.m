@@ -149,8 +149,13 @@
 }
 
 -(void)fillInPlaceholders {
-#warning TODO
-    //_data = _data.map(_fillInPlaceholders)
+    
+    NSMutableArray *fillArray = [NSMutableArray array];
+    for (id object in _data) {
+        [fillArray addObject: [self _fillInPlaceholders:object]];
+    }
+    
+    _data = fillArray;
 }
 
 
@@ -160,27 +165,26 @@
     {
         NSDictionary *dict = object;
         NSNumber *value = dict[@"_placeholder"];
-        if(value.boolValue) {
+        if([value isKindOfClass:[NSNumber class]] && value.boolValue) {
             NSNumber *num = dict[@"num"];
             return _binary[num.intValue];
         }
         else {
-#warning TODO
-           /* return dict.reduce(JSON(), {cur, keyValue in
-                var cur = cur
-                
-                cur[keyValue.0] = _fillInPlaceholders(keyValue.1)
-                
-                return cur
-            })
-            */
-            return object;
+            NSMutableDictionary *result = [NSMutableDictionary dictionary];
+            for (id key in dict.allKeys) {
+                [result setValue:[self _fillInPlaceholders:dict[key]] forKey:key];
+            }
+            return result;
         }
     }
-    else if ([object isKindOfClass:[NSArray class]]) {
-#warning TODO
-        //return arr.map(_fillInPlaceholders)
-        return object;
+    else if ([object isKindOfClass:[NSArray class]])
+    {
+        NSArray *arr = object;
+        NSMutableArray *fillArray = [NSMutableArray array];
+        for (id item in arr) {
+            [fillArray addObject:[self _fillInPlaceholders:item]];
+        }
+        return fillArray;
     }
     else {
         return object;
@@ -191,13 +195,10 @@
 +(VPSocketPacket*)packetFromEmit:(NSArray*)items id:(int)id nsp:(NSString*)nsp ack:(BOOL)ack {
     
     NSMutableArray *binary = [NSMutableArray array];
-    NSArray *parsedData =  nil;
-#warning TODO
-    VPPacketType type = [self findType:binary.count ack: ack];
+    NSArray *parsedData = [[self class] parseItems:items toBinary:binary];
+    VPPacketType type = [[self class] findType:binary.count ack: ack];
     return [[VPSocketPacket alloc] init:type data:parsedData id:id nsp:nsp placeholders:0 binary:binary];
-    
 }
-
 
 +(VPPacketType) findType:(NSInteger)binCount ack:(BOOL)ack
 {
@@ -210,6 +211,48 @@
         return ack?VPPacketTypeBinaryAck:VPPacketTypeBinaryEvent;
     }
     return VPPacketTypeError;
+}
+
+
+
++(NSArray*) parseItems:(NSArray*)items toBinary:(NSMutableArray*)binary {
+    
+    NSMutableArray *parsedData = [NSMutableArray array];
+    for (id item in items) {
+        [parsedData addObject: [[self class] shred:item binary:binary]];
+    }
+    return parsedData;
+}
+
++(id)shred:(id)data binary:(NSMutableArray*)binary {
+    
+    NSDictionary *placeholder = @{@"_placeholder":@YES, @"num":@(binary.count)};
+    
+    if([data isKindOfClass:[NSData class]])
+    {
+        [binary addObject:data];
+        return placeholder;
+    }
+    else if([data isKindOfClass:[NSArray class]])
+    {
+        NSArray *arr = data;
+        NSMutableArray *fillArray = [NSMutableArray array];
+        for (id item in arr) {
+            [fillArray addObject:[[self class] shred:item binary:binary]];
+        }
+        return fillArray;
+        
+    }
+    else if([data isKindOfClass:[NSDictionary class]])
+    {
+        NSDictionary *dict = data;
+        NSMutableDictionary *result = [NSMutableDictionary dictionary];
+        for (id key in dict.allKeys) {
+            [result setValue:[[self class] shred:dict[key] binary:binary] forKey:key];
+        }
+        return result;
+    }
+    return data;
 }
 
 @end
