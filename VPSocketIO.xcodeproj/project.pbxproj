@@ -7,32 +7,68 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F80C024F0F23C9DBCACD6A4 /* libPods-VPSocketIO-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CB34B04ED99C1F79494D5BD /* libPods-VPSocketIO-iOS.a */; };
 		9B14BF36A1A6FF987242BC36 /* libPods-VPSocketIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83C1E19BC9A764AA99A52984 /* libPods-VPSocketIO.a */; };
-		F035C7561F75C71B00174C98 /* NSString+VPSocketIO.m in Sources */ = {isa = PBXBuildFile; fileRef = F035C7551F75C71B00174C98 /* NSString+VPSocketIO.m */; };
-		F035C75A1F76635000174C98 /* VPStringReader.m in Sources */ = {isa = PBXBuildFile; fileRef = F035C7591F76635000174C98 /* VPStringReader.m */; };
-		F035C75E1F76898400174C98 /* DefaultSocketLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = F035C75D1F76898400174C98 /* DefaultSocketLogger.m */; };
-		F03E86281F7AA29000EF12B7 /* VPSocketEngine+EnginePollable.m in Sources */ = {isa = PBXBuildFile; fileRef = F03E86271F7AA29000EF12B7 /* VPSocketEngine+EnginePollable.m */; };
-		F05AF09E1F717B1000DC58C7 /* VPSocketIOClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F05AF09D1F717B1000DC58C7 /* VPSocketIOClient.m */; };
 		F06B19321F71466D003E81B1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F06B19311F71466D003E81B1 /* main.m */; };
 		F06B19351F71466D003E81B1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F06B19341F71466D003E81B1 /* AppDelegate.m */; };
 		F06B19381F71466D003E81B1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F06B19371F71466D003E81B1 /* ViewController.m */; };
 		F06B193B1F71466D003E81B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F06B19391F71466D003E81B1 /* Main.storyboard */; };
 		F06B193D1F71466D003E81B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F06B193C1F71466D003E81B1 /* Assets.xcassets */; };
 		F06B19401F71466D003E81B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F06B193E1F71466D003E81B1 /* LaunchScreen.storyboard */; };
-		F07857B11F7198BD00B97C77 /* VPSocketAnyEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F07857B01F7198BD00B97C77 /* VPSocketAnyEvent.m */; };
-		F07857BA1F71AA1C00B97C77 /* VPSocketAckEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = F07857B91F71AA1C00B97C77 /* VPSocketAckEmitter.m */; };
-		F07857BE1F71B05000B97C77 /* VPSocketEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = F07857BD1F71B05000B97C77 /* VPSocketEngine.m */; };
-		F07857CB1F71BA1600B97C77 /* VPSocketPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = F07857CA1F71BA1600B97C77 /* VPSocketPacket.m */; };
-		F07857CE1F71D06F00B97C77 /* VPSocketAckManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F07857CD1F71D06F00B97C77 /* VPSocketAckManager.m */; };
-		F08E4F611F7AAB370032C8E3 /* VPSocketEngine+EngineWebsocket.m in Sources */ = {isa = PBXBuildFile; fileRef = F08E4F601F7AAB370032C8E3 /* VPSocketEngine+EngineWebsocket.m */; };
-		F08E4F641F7AB21E0032C8E3 /* VPSocketOnAckCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = F08E4F631F7AB21E0032C8E3 /* VPSocketOnAckCallback.m */; };
-		F08E4F671F7AB3850032C8E3 /* VPSocketAck.m in Sources */ = {isa = PBXBuildFile; fileRef = F08E4F661F7AB3850032C8E3 /* VPSocketAck.m */; };
+		F08E4F721F7ACFEB0032C8E3 /* VPSocketIO_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = F08E4F701F7ACFEB0032C8E3 /* VPSocketIO_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F08E4F751F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F08E4F6E1F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework */; };
+		F08E4F761F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F08E4F6E1F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F08E4F7E1F7AD2480032C8E3 /* VPSocketPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = F07857CA1F71BA1600B97C77 /* VPSocketPacket.m */; };
+		F08E4F7F1F7AD2480032C8E3 /* VPSocketEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = F07857BD1F71B05000B97C77 /* VPSocketEngine.m */; };
+		F08E4F801F7AD2480032C8E3 /* VPSocketEngine+EnginePollable.m in Sources */ = {isa = PBXBuildFile; fileRef = F03E86271F7AA29000EF12B7 /* VPSocketEngine+EnginePollable.m */; };
+		F08E4F811F7AD2480032C8E3 /* VPSocketEngine+EngineWebsocket.m in Sources */ = {isa = PBXBuildFile; fileRef = F08E4F601F7AAB370032C8E3 /* VPSocketEngine+EngineWebsocket.m */; };
+		F08E4F821F7AD2480032C8E3 /* VPSocketAckEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = F07857B91F71AA1C00B97C77 /* VPSocketAckEmitter.m */; };
+		F08E4F831F7AD2480032C8E3 /* VPSocketAckManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F07857CD1F71D06F00B97C77 /* VPSocketAckManager.m */; };
+		F08E4F841F7AD24E0032C8E3 /* VPSocketAck.m in Sources */ = {isa = PBXBuildFile; fileRef = F08E4F661F7AB3850032C8E3 /* VPSocketAck.m */; };
+		F08E4F851F7AD2570032C8E3 /* VPSocketOnAckCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = F08E4F631F7AB21E0032C8E3 /* VPSocketOnAckCallback.m */; };
+		F08E4F861F7AD2630032C8E3 /* NSString+VPSocketIO.m in Sources */ = {isa = PBXBuildFile; fileRef = F035C7551F75C71B00174C98 /* NSString+VPSocketIO.m */; };
+		F08E4F871F7AD2630032C8E3 /* VPStringReader.m in Sources */ = {isa = PBXBuildFile; fileRef = F035C7591F76635000174C98 /* VPStringReader.m */; };
+		F08E4F881F7AD2630032C8E3 /* DefaultSocketLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = F035C75D1F76898400174C98 /* DefaultSocketLogger.m */; };
+		F08E4F891F7AD2630032C8E3 /* VPSocketLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = F08E4F7C1F7AD1030032C8E3 /* VPSocketLogger.m */; };
+		F08E4F8A1F7AD2630032C8E3 /* VPSocketIOClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F05AF09D1F717B1000DC58C7 /* VPSocketIOClient.m */; };
+		F08E4F8B1F7AD2630032C8E3 /* VPSocketAnyEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F07857B01F7198BD00B97C77 /* VPSocketAnyEvent.m */; };
+		F08E4F8D1F7AD60F0032C8E3 /* VPSocketLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = F08E4F7B1F7AD1030032C8E3 /* VPSocketLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F08E4F8E1F7AD60F0032C8E3 /* VPSocketIOClient.h in Headers */ = {isa = PBXBuildFile; fileRef = F05AF09C1F717B1000DC58C7 /* VPSocketIOClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F08E4F8F1F7AD60F0032C8E3 /* VPSocketAnyEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = F07857AF1F7198BD00B97C77 /* VPSocketAnyEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F08E4F901F7AD60F0032C8E3 /* VPSocketIOClientProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F07857C61F71B85500B97C77 /* VPSocketIOClientProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F08E4F911F7AD67E0032C8E3 /* VPSocketOnAckCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = F08E4F621F7AB21E0032C8E3 /* VPSocketOnAckCallback.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F08E4F731F7ACFEB0032C8E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F06B19251F71466C003E81B1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F08E4F6D1F7ACFEB0032C8E3;
+			remoteInfo = "VPSocketIO-iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F08E4F7A1F7ACFEB0032C8E3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F08E4F761F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		6E6A8E1D45E502E00ED15106 /* Pods-VPSocketIO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VPSocketIO.release.xcconfig"; path = "Pods/Target Support Files/Pods-VPSocketIO/Pods-VPSocketIO.release.xcconfig"; sourceTree = "<group>"; };
 		83C1E19BC9A764AA99A52984 /* libPods-VPSocketIO.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VPSocketIO.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		901149581199AEC23EC7BB94 /* Pods-VPSocketIO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VPSocketIO.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VPSocketIO/Pods-VPSocketIO.debug.xcconfig"; sourceTree = "<group>"; };
+		9CB34B04ED99C1F79494D5BD /* libPods-VPSocketIO-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VPSocketIO-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED28E06FD9B018B38AB3D962 /* Pods-VPSocketIO-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VPSocketIO-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VPSocketIO-iOS/Pods-VPSocketIO-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		F035C7541F75C71B00174C98 /* NSString+VPSocketIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSString+VPSocketIO.h"; path = "Source/NSString+VPSocketIO.h"; sourceTree = "<group>"; };
 		F035C7551F75C71B00174C98 /* NSString+VPSocketIO.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSString+VPSocketIO.m"; path = "Source/NSString+VPSocketIO.m"; sourceTree = "<group>"; };
 		F035C7581F76635000174C98 /* VPStringReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VPStringReader.h; path = Source/VPStringReader.h; sourceTree = "<group>"; };
@@ -72,6 +108,12 @@
 		F08E4F631F7AB21E0032C8E3 /* VPSocketOnAckCallback.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VPSocketOnAckCallback.m; path = Source/VPSocketOnAckCallback.m; sourceTree = "<group>"; };
 		F08E4F651F7AB3850032C8E3 /* VPSocketAck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VPSocketAck.h; path = Source/VPSocketAck.h; sourceTree = "<group>"; };
 		F08E4F661F7AB3850032C8E3 /* VPSocketAck.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VPSocketAck.m; path = Source/VPSocketAck.m; sourceTree = "<group>"; };
+		F08E4F6E1F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VPSocketIO_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F08E4F701F7ACFEB0032C8E3 /* VPSocketIO_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VPSocketIO_iOS.h; sourceTree = "<group>"; };
+		F08E4F711F7ACFEB0032C8E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F08E4F7B1F7AD1030032C8E3 /* VPSocketLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VPSocketLogger.h; path = Source/VPSocketLogger.h; sourceTree = "<group>"; };
+		F08E4F7C1F7AD1030032C8E3 /* VPSocketLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VPSocketLogger.m; path = Source/VPSocketLogger.m; sourceTree = "<group>"; };
+		F58809151FFD78744036DF32 /* Pods-VPSocketIO-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VPSocketIO-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-VPSocketIO-iOS/Pods-VPSocketIO-iOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +122,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B14BF36A1A6FF987242BC36 /* libPods-VPSocketIO.a in Frameworks */,
+				F08E4F751F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F08E4F6A1F7ACFEB0032C8E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F80C024F0F23C9DBCACD6A4 /* libPods-VPSocketIO-iOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				83C1E19BC9A764AA99A52984 /* libPods-VPSocketIO.a */,
+				9CB34B04ED99C1F79494D5BD /* libPods-VPSocketIO-iOS.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -99,6 +151,8 @@
 			children = (
 				901149581199AEC23EC7BB94 /* Pods-VPSocketIO.debug.xcconfig */,
 				6E6A8E1D45E502E00ED15106 /* Pods-VPSocketIO.release.xcconfig */,
+				ED28E06FD9B018B38AB3D962 /* Pods-VPSocketIO-iOS.debug.xcconfig */,
+				F58809151FFD78744036DF32 /* Pods-VPSocketIO-iOS.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -132,6 +186,7 @@
 			children = (
 				F05AF09A1F71746000DC58C7 /* Source */,
 				F06B192F1F71466C003E81B1 /* VPSocketIO */,
+				F08E4F6F1F7ACFEB0032C8E3 /* VPSocketIO-iOS */,
 				F06B192E1F71466C003E81B1 /* Products */,
 				708991CF7745A1710D7B5991 /* Pods */,
 				4DEB8C91FF02E2F6C26C35D2 /* Frameworks */,
@@ -142,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				F06B192D1F71466C003E81B1 /* VPSocketIO.app */,
+				F08E4F6E1F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -179,6 +235,8 @@
 				F035C7591F76635000174C98 /* VPStringReader.m */,
 				F035C75C1F76898400174C98 /* DefaultSocketLogger.h */,
 				F035C75D1F76898400174C98 /* DefaultSocketLogger.m */,
+				F08E4F7B1F7AD1030032C8E3 /* VPSocketLogger.h */,
+				F08E4F7C1F7AD1030032C8E3 /* VPSocketLogger.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -222,7 +280,32 @@
 			name = Parse;
 			sourceTree = "<group>";
 		};
+		F08E4F6F1F7ACFEB0032C8E3 /* VPSocketIO-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				F08E4F701F7ACFEB0032C8E3 /* VPSocketIO_iOS.h */,
+				F08E4F711F7ACFEB0032C8E3 /* Info.plist */,
+			);
+			path = "VPSocketIO-iOS";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		F08E4F6B1F7ACFEB0032C8E3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F08E4F721F7ACFEB0032C8E3 /* VPSocketIO_iOS.h in Headers */,
+				F08E4F8D1F7AD60F0032C8E3 /* VPSocketLogger.h in Headers */,
+				F08E4F8E1F7AD60F0032C8E3 /* VPSocketIOClient.h in Headers */,
+				F08E4F8F1F7AD60F0032C8E3 /* VPSocketAnyEvent.h in Headers */,
+				F08E4F911F7AD67E0032C8E3 /* VPSocketOnAckCallback.h in Headers */,
+				F08E4F901F7AD60F0032C8E3 /* VPSocketIOClientProtocol.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		F06B192C1F71466C003E81B1 /* VPSocketIO */ = {
@@ -235,15 +318,37 @@
 				F06B192B1F71466C003E81B1 /* Resources */,
 				528A9D138F6478A750A30A58 /* [CP] Embed Pods Frameworks */,
 				B7FE5826C7DDEFB63FD107D6 /* [CP] Copy Pods Resources */,
+				F08E4F7A1F7ACFEB0032C8E3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F08E4F741F7ACFEB0032C8E3 /* PBXTargetDependency */,
 			);
 			name = VPSocketIO;
 			productName = VPSocketIO;
 			productReference = F06B192D1F71466C003E81B1 /* VPSocketIO.app */;
 			productType = "com.apple.product-type.application";
+		};
+		F08E4F6D1F7ACFEB0032C8E3 /* VPSocketIO-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F08E4F771F7ACFEB0032C8E3 /* Build configuration list for PBXNativeTarget "VPSocketIO-iOS" */;
+			buildPhases = (
+				AA5774050C271EFD2FCD6FA3 /* [CP] Check Pods Manifest.lock */,
+				F08E4F691F7ACFEB0032C8E3 /* Sources */,
+				F08E4F6A1F7ACFEB0032C8E3 /* Frameworks */,
+				F08E4F6B1F7ACFEB0032C8E3 /* Headers */,
+				F08E4F6C1F7ACFEB0032C8E3 /* Resources */,
+				A680704464618D653CAF9FEC /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "VPSocketIO-iOS";
+			productName = "VPSocketIO-iOS";
+			productReference = F08E4F6E1F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -256,6 +361,11 @@
 				TargetAttributes = {
 					F06B192C1F71466C003E81B1 = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = 7EB863BHDM;
+						ProvisioningStyle = Automatic;
+					};
+					F08E4F6D1F7ACFEB0032C8E3 = {
+						CreatedOnToolsVersion = 9.0;
 						DevelopmentTeam = 7EB863BHDM;
 						ProvisioningStyle = Automatic;
 					};
@@ -275,6 +385,7 @@
 			projectRoot = "";
 			targets = (
 				F06B192C1F71466C003E81B1 /* VPSocketIO */,
+				F08E4F6D1F7ACFEB0032C8E3 /* VPSocketIO-iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -287,6 +398,13 @@
 				F06B19401F71466D003E81B1 /* LaunchScreen.storyboard in Resources */,
 				F06B193D1F71466D003E81B1 /* Assets.xcassets in Resources */,
 				F06B193B1F71466D003E81B1 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F08E4F6C1F7ACFEB0032C8E3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,13 +432,49 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VPSocketIO-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A680704464618D653CAF9FEC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VPSocketIO-iOS/Pods-VPSocketIO-iOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AA5774050C271EFD2FCD6FA3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VPSocketIO-iOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B7FE5826C7DDEFB63FD107D6 /* [CP] Copy Pods Resources */ = {
@@ -345,26 +499,42 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F07857BE1F71B05000B97C77 /* VPSocketEngine.m in Sources */,
 				F06B19381F71466D003E81B1 /* ViewController.m in Sources */,
-				F08E4F611F7AAB370032C8E3 /* VPSocketEngine+EngineWebsocket.m in Sources */,
-				F07857CB1F71BA1600B97C77 /* VPSocketPacket.m in Sources */,
 				F06B19351F71466D003E81B1 /* AppDelegate.m in Sources */,
-				F07857BA1F71AA1C00B97C77 /* VPSocketAckEmitter.m in Sources */,
-				F08E4F671F7AB3850032C8E3 /* VPSocketAck.m in Sources */,
-				F07857CE1F71D06F00B97C77 /* VPSocketAckManager.m in Sources */,
-				F035C7561F75C71B00174C98 /* NSString+VPSocketIO.m in Sources */,
-				F07857B11F7198BD00B97C77 /* VPSocketAnyEvent.m in Sources */,
 				F06B19321F71466D003E81B1 /* main.m in Sources */,
-				F05AF09E1F717B1000DC58C7 /* VPSocketIOClient.m in Sources */,
-				F03E86281F7AA29000EF12B7 /* VPSocketEngine+EnginePollable.m in Sources */,
-				F08E4F641F7AB21E0032C8E3 /* VPSocketOnAckCallback.m in Sources */,
-				F035C75E1F76898400174C98 /* DefaultSocketLogger.m in Sources */,
-				F035C75A1F76635000174C98 /* VPStringReader.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F08E4F691F7ACFEB0032C8E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F08E4F861F7AD2630032C8E3 /* NSString+VPSocketIO.m in Sources */,
+				F08E4F871F7AD2630032C8E3 /* VPStringReader.m in Sources */,
+				F08E4F881F7AD2630032C8E3 /* DefaultSocketLogger.m in Sources */,
+				F08E4F891F7AD2630032C8E3 /* VPSocketLogger.m in Sources */,
+				F08E4F8A1F7AD2630032C8E3 /* VPSocketIOClient.m in Sources */,
+				F08E4F8B1F7AD2630032C8E3 /* VPSocketAnyEvent.m in Sources */,
+				F08E4F851F7AD2570032C8E3 /* VPSocketOnAckCallback.m in Sources */,
+				F08E4F841F7AD24E0032C8E3 /* VPSocketAck.m in Sources */,
+				F08E4F7E1F7AD2480032C8E3 /* VPSocketPacket.m in Sources */,
+				F08E4F7F1F7AD2480032C8E3 /* VPSocketEngine.m in Sources */,
+				F08E4F801F7AD2480032C8E3 /* VPSocketEngine+EnginePollable.m in Sources */,
+				F08E4F811F7AD2480032C8E3 /* VPSocketEngine+EngineWebsocket.m in Sources */,
+				F08E4F821F7AD2480032C8E3 /* VPSocketAckEmitter.m in Sources */,
+				F08E4F831F7AD2480032C8E3 /* VPSocketAckManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F08E4F741F7ACFEB0032C8E3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F08E4F6D1F7ACFEB0032C8E3 /* VPSocketIO-iOS */;
+			targetProxy = F08E4F731F7ACFEB0032C8E3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		F06B19391F71466D003E81B1 /* Main.storyboard */ = {
@@ -433,7 +603,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -482,7 +652,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -495,6 +665,7 @@
 			baseConfigurationReference = 901149581199AEC23EC7BB94 /* Pods-VPSocketIO.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7EB863BHDM;
 				INFOPLIST_FILE = VPSocketIO/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -508,11 +679,70 @@
 			baseConfigurationReference = 6E6A8E1D45E502E00ED15106 /* Pods-VPSocketIO.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7EB863BHDM;
 				INFOPLIST_FILE = VPSocketIO/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vascome.VPSocketIO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		F08E4F781F7ACFEB0032C8E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED28E06FD9B018B38AB3D962 /* Pods-VPSocketIO-iOS.debug.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 7EB863BHDM;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "VPSocketIO-iOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vascome.VPSocketIO-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		F08E4F791F7ACFEB0032C8E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F58809151FFD78744036DF32 /* Pods-VPSocketIO-iOS.release.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 7EB863BHDM;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "VPSocketIO-iOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vascome.VPSocketIO-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -533,6 +763,15 @@
 			buildConfigurations = (
 				F06B19451F71466D003E81B1 /* Debug */,
 				F06B19461F71466D003E81B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F08E4F771F7ACFEB0032C8E3 /* Build configuration list for PBXNativeTarget "VPSocketIO-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F08E4F781F7ACFEB0032C8E3 /* Debug */,
+				F08E4F791F7ACFEB0032C8E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

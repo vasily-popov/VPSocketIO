@@ -13,7 +13,6 @@
 #import "VPSocketEngine+Private.h"
 #import "VPSocketEngine+EnginePollable.h"
 #import "VPSocketEngine+EngineWebsocket.h"
-#import <Jetfire/Jetfire.h>
 
 @interface VPProbe : NSObject
 

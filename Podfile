@@ -3,5 +3,11 @@ platform :ios, '9.0'
 inhibit_all_warnings!
 
 target 'VPSocketIO' do
-    pod 'jetfire', :git => 'https://github.com/acmacalister/jetfire.git', :tag => '0.1.6'
+    pod 'jetfire'
 end
+
+target 'VPSocketIO-iOS' do
+    pod 'jetfire'
+end
+
+

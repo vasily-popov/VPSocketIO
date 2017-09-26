@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "VPSocketAckEmitter.h"
 #import "VPSocketAnyEvent.h"
 #import "VPSocketOnAckCallback.h"
 #import "VPSocketIOClientProtocol.h"

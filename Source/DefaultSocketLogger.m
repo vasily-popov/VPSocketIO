@@ -8,50 +8,19 @@
 
 #import "DefaultSocketLogger.h"
 
-
-@implementation SocketLogger
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        self.log = NO;
-    }
-    return self;
-}
-
--(void) log:(NSString*)message type:(NSString*)type
-{
-    [self printLog:@"LOG" message:message type:type];
-}
--(void) error:(NSString*)message type:(NSString*)type
-{
-    [self printLog:@"ERROR" message:message type:type];
-}
-
--(void) printLog:(NSString*)logType message:(NSString*)message type:(NSString*)type
-{
-    if(_log) {
-        NSLog(@"%@ %@: %@", logType, type, message);
-    }
-    
-}
-
-@end
-
 @implementation DefaultSocketLogger
 
-static SocketLogger *logInstance;
+static VPSocketLogger *logInstance;
 
-+(void)setLogger:(SocketLogger*)newLogger {
++(void)setLogger:(VPSocketLogger*)newLogger {
     logInstance = newLogger;
 }
 
-+(SocketLogger*)logger {
++(VPSocketLogger*)logger {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^
     {
-        logInstance = [SocketLogger new];
+        logInstance = [VPSocketLogger new];
     });
     return logInstance;
     

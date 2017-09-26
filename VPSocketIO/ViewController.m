@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "VPSocketIOClient.h"
+#import <VPSocketIO_iOS/VPSocketIO_iOS.h>
 
 @interface ViewController () {
     VPSocketIOClient *socket;
@@ -40,7 +40,7 @@
     
     
     
-    [socket on:@"256" callback:^(NSArray *array, VPSocketAckEmitter *emitter) {
+    [socket on:@"connect" callback:^(NSArray *array, VPSocketAckEmitter *emitter) {
         NSLog(@"!!!!socket connected");
     }];
     

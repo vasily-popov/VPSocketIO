@@ -7,18 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@interface SocketLogger:NSObject
-
-@property (nonatomic) BOOL log;
-
--(void) log:(NSString*)message type:(NSString*)type;
--(void) error:(NSString*)message type:(NSString*)type;
-
-@end
+#import "VPSocketLogger.h"
 
 @interface DefaultSocketLogger:NSObject
 
-@property (class) SocketLogger *logger;
+@property (class) VPSocketLogger *logger;
 
 @end

@@ -10,7 +10,6 @@
 #define VPSocketEngineProtocol_H
 
 #import <Foundation/Foundation.h>
-#import <Jetfire/Jetfire.h>
 
 @protocol VPSocketEngineClient <NSObject>
 
