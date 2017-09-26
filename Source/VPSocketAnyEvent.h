@@ -7,10 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "VPSocketIOUtils.h"
 #import "VPSocketIOClientProtocol.h"
-
-@class VPSocketIOClient;
 
 @interface VPSocketAnyEvent : NSObject
 
@@ -26,9 +23,9 @@
 
 @property (nonatomic, strong, readonly) NSString* event;
 @property (nonatomic, strong, readonly) NSUUID *uuid;
-@property (nonatomic, strong, readonly) VPSocketNormalCallback callback;
+@property (nonatomic, strong, readonly) VPSocketOnEventCallback callback;
 
--(instancetype)initWithEvent:(NSString*)event uuid:(NSUUID*)uuid andCallback:(VPSocketNormalCallback)callback;
+-(instancetype)initWithEvent:(NSString*)event uuid:(NSUUID*)uuid andCallback:(VPSocketOnEventCallback)callback;
 
--(void)executeCallbackWith:(NSArray*)items withAck:(int)ack withSocket:(VPSocketIOClient*)socket;
+-(void)executeCallbackWith:(NSArray*)items withAck:(int)ack withSocket:(id<VPSocketIOClientProtocol>)socket;
 @end

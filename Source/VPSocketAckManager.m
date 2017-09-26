@@ -11,7 +11,7 @@
 @interface VPSocketAck()
 
 @property (nonatomic) int ack;
-@property (nonatomic, strong) VPAckCallback callback;
+@property (nonatomic, strong) VPScoketAckArrayCallback callback;
 
 @end
 
@@ -34,7 +34,7 @@
     }
     return self;
 }
--(void)addAck:(int)ack callback:(VPAckCallback)callback
+-(void)addAck:(int)ack callback:(VPScoketAckArrayCallback)callback
 {
     [acks addObject:[[VPSocketAck alloc] initWithAck:ack andCallBack:callback]];
 }
@@ -76,7 +76,7 @@
 
 @implementation VPSocketAck
 
--(instancetype)initWithAck:(int)ack andCallBack:(VPAckCallback)callback
+-(instancetype)initWithAck:(int)ack andCallBack:(VPScoketAckArrayCallback)callback
 {
     self = [super init];
     if(self) {

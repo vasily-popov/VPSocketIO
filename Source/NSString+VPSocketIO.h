@@ -11,7 +11,7 @@
 @interface NSString (VPSocketIO)
 
 -(NSDictionary*)toDictionary;
--(NSString*) urlEncode;
+-(NSString*)urlEncode;
 -(NSArray*)toArray;
 
 @end

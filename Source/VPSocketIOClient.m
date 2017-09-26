@@ -8,30 +8,46 @@
 
 #import "VPSocketIOClient.h"
 #import "VPSocketAnyEvent.h"
-#import "VPSocketIOUtils.h"
 #import "VPSocketEngineProtocol.h"
 #import "VPSocketEngine.h"
 #import "VPSocketPacket.h"
 #import "VPSocketAckManager.h"
 #import "DefaultSocketLogger.h"
-#import "VPSocketStreamReader.h"
+#import "VPSocketStringReader.h"
 #import "NSString+VPSocketIO.h"
 
-@interface VPSocketIOClient() <VPSocketEngineClient,VPSocketParsable>
+typedef enum : NSUInteger {
+    /// Called when the client connects. This is also called on a successful reconnection. A connect event gets one
+    VPSocketClientEventConnect = 0x0,
+    /// Called when the socket has disconnected and will not attempt to try to reconnect.
+    VPSocketClientEventDisconnect,
+    /// Called when an error occurs.
+    VPSocketClientEventError,
+    /// Called when the client begins the reconnection process.
+    VPSocketClientEventReconnect,
+    /// Called each time the client tries to reconnect to the server.
+    VPSocketClientEventReconnectAttempt,
+    /// Called every time there is a change in the client's status.
+    VPSocketClientEventStatusChange,
+} VPSocketClientEvent;
+
+
+@interface VPSocketIOClient() <VPSocketEngineClient>
 {
     int currentAck;
     int reconnectAttempts;
     int currentReconnectAttempt;
     BOOL reconnecting;
     VPSocketAnyEventHandler anyHandler;
+    
+    NSDictionary *eventStrings;
+    NSDictionary *statusStrings;
 }
 
 @property (nonatomic, strong, readonly) NSString* logType;
 @property (nonatomic, strong) id<VPSocketEngineProtocol> engine;
 @property (nonatomic, strong) NSMutableArray<VPSocketEventHandler*>* handlers;
-
 @property (nonatomic, strong) NSMutableArray<VPSocketPacket*>* waitingPackets;
-
 
 @end
 
@@ -103,7 +119,7 @@
     [self connectWithTimeoutAfter:0 withHandler:nil];
 }
 
--(void) connectWithTimeoutAfter:(double)timeout withHandler:(VPSocketHandler)handler
+-(void) connectWithTimeoutAfter:(double)timeout withHandler:(VPSocketIOVoidHandler)handler
 {
     if(_status != VPSocketIOClientStatusConnected) {
         self.status = VPSocketIOClientStatusConnecting;
@@ -161,6 +177,20 @@
     ackHandlers = [[VPSocketAckManager alloc] init];
     _handlers = [[NSMutableArray alloc] init];
     _waitingPackets = [[NSMutableArray alloc] init];
+    
+    
+    eventStrings =@{ @(VPSocketClientEventConnect) : @"connect",
+                     @(VPSocketClientEventDisconnect) : @"disconnect",
+                     @(VPSocketClientEventError) : @"error",
+                     @(VPSocketClientEventReconnect) : @"reconnect",
+                     @(VPSocketClientEventReconnectAttempt) : @"reconnectAttempt",
+                     @(VPSocketClientEventStatusChange) : @"statusChange"};
+    
+    
+    statusStrings = @{ @(VPSocketIOClientStatusNotConnected) : @"notconnected",
+                       @(VPSocketIOClientStatusDisconnected) : @"disconnected",
+                       @(VPSocketIOClientStatusConnecting) : @"connecting",
+                       @(VPSocketIOClientStatusConnected) : @"connected"};
 }
 
 #pragma mark - property
@@ -191,8 +221,8 @@
         default:
             break;
     }
-    [self handleClientEvent:[self eventToString:VPSocketClientEventStatusChange]
-                   withData:@[[self statusToString:status]]];
+    [self handleClientEvent:eventStrings[@(VPSocketClientEventStatusChange)]
+                   withData:@[statusStrings[@(status)]]];
     
 }
 
@@ -232,7 +262,7 @@
         
         // Make sure the engine is actually dead.
         [_engine disconnect:reason];
-        [self handleClientEvent:[self eventToString:VPSocketClientEventDisconnect]
+        [self handleClientEvent:eventStrings[@(VPSocketClientEventDisconnect)]
                        withData:@[reason]];
     }
 }
@@ -249,7 +279,7 @@
     }
     else
     {
-        [self handleClientEvent:[self eventToString:VPSocketClientEventError]
+        [self handleClientEvent:eventStrings[@(VPSocketClientEventError)]
                        withData:@[@"Tried emitting \(event) when not connected"]];
     }
 }
@@ -272,7 +302,7 @@
         [_engine send:str withData:packet.binary];
     }
     else {
-        [self handleClientEvent:[self eventToString:VPSocketClientEventError]
+        [self handleClientEvent:eventStrings[@(VPSocketClientEventError)]
                        withData:@[@"Tried emitting when not connected"]];
     }
 }
@@ -301,15 +331,13 @@
     }
 }
 
-
-
 #pragma mark - off
 
 /// Removes handler(s) for a client event.
--(void) off:(VPSocketClientEvent) event
+-(void) off:(NSString*) event
 {
-    [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Removing handler for event: %lu", event] type:self.logType];
-    NSPredicate *predicate= [NSPredicate predicateWithFormat:@"SELF.event != %d", event];
+    [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Removing handler for event: %@", event] type:self.logType];
+    NSPredicate *predicate= [NSPredicate predicateWithFormat:@"SELF.event != %@", event];
     [_handlers filterUsingPredicate:predicate];
 }
 
@@ -325,7 +353,7 @@
 #pragma mark - on
 
 /// Adds a handler for an event.
--(NSUUID*) on:(NSString*)event callback:(VPSocketNormalCallback) callback
+-(NSUUID*) on:(NSString*)event callback:(VPSocketOnEventCallback) callback
 {
     [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Adding handler for event: %@", event] type:self.logType];
     VPSocketEventHandler *handler = [[VPSocketEventHandler alloc] initWithEvent:event
@@ -336,7 +364,7 @@
 }
 
 /// Adds a single-use handler for a client event.
--(NSUUID*) once:(NSString*)event callback:(VPSocketNormalCallback) callback
+-(NSUUID*) once:(NSString*)event callback:(VPSocketOnEventCallback) callback
 {
     [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Adding once handler for event: %@", event] type:self.logType];
     
@@ -381,7 +409,7 @@
     if(reconnecting)
     {
         [DefaultSocketLogger.logger log:@"Starting reconnect" type:self.logType];
-        [self handleClientEvent:[self eventToString:VPSocketClientEventReconnect]
+        [self handleClientEvent:eventStrings[@(VPSocketClientEventReconnect)]
                        withData:@[reason]];
         [self _tryReconnect];
     }
@@ -398,7 +426,8 @@
         else
         {
             [DefaultSocketLogger.logger log:@"Trying to reconnect" type:self.logType];
-            [self handleClientEvent:[self eventToString:VPSocketClientEventReconnectAttempt] withData:@[@(reconnectAttempts - currentReconnectAttempt)]];
+            [self handleClientEvent:eventStrings[@(VPSocketClientEventReconnectAttempt)]
+                           withData:@[@(reconnectAttempts - currentReconnectAttempt)]];
             
             currentReconnectAttempt += 1;
             [self connect];
@@ -468,18 +497,14 @@
 {
     [DefaultSocketLogger.logger log:@"Socket connected" type:self.logType];
     self.status = VPSocketIOClientStatusConnected;
-    [self handleClientEvent: [self eventToString:VPSocketClientEventConnect]
+    [self handleClientEvent:eventStrings[@(VPSocketClientEventConnect)]
                    withData:@[namespace]];
 }
 
 -(void)didError:(NSString*)reason {
     
     [DefaultSocketLogger.logger error:reason type:self.logType];
-    [self handleClientEvent:[self eventToString:VPSocketClientEventError] withData:@[reason]];
-}
-
--(NSString*)eventToString:(VPSocketClientEvent)event {
-    return [NSString stringWithFormat:@"%lu",event];
+    [self handleClientEvent:eventStrings[@(VPSocketClientEventError)] withData:@[reason]];
 }
 
 /// Joins `namespace`.
@@ -508,7 +533,7 @@
 
 -(void) _engineDidError:(NSString*)reason {
     [DefaultSocketLogger.logger error:reason type:self.logType];
-    [self handleClientEvent:[self eventToString:VPSocketClientEventError]
+    [self handleClientEvent:eventStrings[@(VPSocketClientEventError)]
                    withData:@[reason]];
 }
 
@@ -624,7 +649,7 @@
 -(VPSocketPacket*)parseString:(NSString*)message
 {
     NSCharacterSet* digits = [NSCharacterSet decimalDigitCharacterSet];
-    VPSocketStreamReader *reader = [[VPSocketStreamReader alloc] init:message];
+    VPSocketStringReader *reader = [[VPSocketStringReader alloc] init:message];
     
     NSString *packetType = [reader read:1];
     if ([packetType rangeOfCharacterFromSet:digits].location != NSNotFound) {

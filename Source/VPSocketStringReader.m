@@ -6,18 +6,18 @@
 //  Copyright © 2017 Vasily Popov. All rights reserved.
 //
 
-#import "VPSocketStreamReader.h"
+#import "VPSocketStringReader.h"
 
-@interface VPSocketStreamReader()
+@interface VPSocketStringReader()
 
 @end
 
-@implementation VPSocketStreamReader
+@implementation VPSocketStringReader
 
 -(instancetype)init:(NSString*)message {
     self = [super init];
     if(self) {
-        self.message = message;
+        _message = message;
         _currentIndex = 0;
     }
     return self;

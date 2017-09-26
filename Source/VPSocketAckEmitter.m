@@ -8,7 +8,6 @@
 
 #import "VPSocketAckEmitter.h"
 #import "VPSocketIOClient.h"
-#import "VPSocketIOUtils.h"
 #import "VPSocketAckManager.h"
 
 
@@ -32,7 +31,7 @@
 }
 
 
--(void)with:(NSArray*) items {
+-(void)emitWith:(NSArray*) items {
     if(_ackNum != -1) {
         [_socket emitAck:_ackNum withItems:items];
     }
@@ -62,7 +61,7 @@
 }
 
 
--(void)timingOutAfter:(double)seconds callback:(VPAckCallback)callback {
+-(void)timingOutAfter:(double)seconds callback:(VPScoketAckArrayCallback)callback {
     
     if (self.socket != nil && _ackNum != -1) {
         

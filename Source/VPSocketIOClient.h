@@ -8,8 +8,18 @@
 
 #import <Foundation/Foundation.h>
 #import "VPSocketAckEmitter.h"
-#import "VPSocketIOUtils.h"
+#import "VPSocketAnyEvent.h"
 #import "VPSocketIOClientProtocol.h"
+
+typedef enum : NSUInteger {
+    VPSocketIOClientStatusNotConnected = 0x1,
+    VPSocketIOClientStatusDisconnected = 0x2,
+    VPSocketIOClientStatusConnecting = 0x3,
+    VPSocketIOClientStatusConnected= 0x4
+} VPSocketIOClientStatus;
+
+typedef void (^VPSocketIOVoidHandler)(void);
+typedef void (^VPSocketAnyEventHandler)(VPSocketAnyEvent*event);
 
 @interface VPSocketIOClient : NSObject<VPSocketIOClientProtocol>
 
@@ -26,16 +36,16 @@
 
 -(instancetype)init:(NSURL*)socketURL withConfig:(NSDictionary*)config;
 -(void) connect;
--(void) connectWithTimeoutAfter:(double)timeout withHandler:(VPSocketHandler)handler;
+-(void) connectWithTimeoutAfter:(double)timeout withHandler:(VPSocketIOVoidHandler)handler;
 -(void) disconnect;
 -(void) reconnect;
 -(void) removeAllHandlers;
 
-
 -(OnAckCallback*) emitWithAck:(NSString*)event items:(NSArray*)items;
 
--(NSUUID*) on:(NSString*)event callback:(VPSocketNormalCallback) callback;
--(NSUUID*) once:(NSString*)event callback:(VPSocketNormalCallback) callback;
+-(NSUUID*) on:(NSString*)event callback:(VPSocketOnEventCallback) callback;
+-(NSUUID*) once:(NSString*)event callback:(VPSocketOnEventCallback) callback;
 -(void) onAny:(VPSocketAnyEventHandler)handler;
+-(void) off:(NSString*) event;
 
 @end

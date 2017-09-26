@@ -7,7 +7,7 @@
 //
 
 #import "VPSocketAnyEvent.h"
-#import "VPSocketIOClient.h"
+#import "VPSocketAckEmitter.h"
 
 @implementation VPSocketAnyEvent
 
@@ -29,7 +29,7 @@
 
 @implementation VPSocketEventHandler : NSObject
 
--(instancetype)initWithEvent:(NSString*)event uuid:(NSUUID*)uuid andCallback:(VPSocketNormalCallback)callback{
+-(instancetype)initWithEvent:(NSString*)event uuid:(NSUUID*)uuid andCallback:(VPSocketOnEventCallback)callback{
     self = [super init];
     if(self) {
         _event = event;
@@ -39,7 +39,7 @@
     return self;
 }
 
--(void)executeCallbackWith:(NSArray*)items withAck:(int)ack withSocket:(VPSocketIOClient*)socket{
+-(void)executeCallbackWith:(NSArray*)items withAck:(int)ack withSocket:(id<VPSocketIOClientProtocol>)socket{
     self.callback(items, [[VPSocketAckEmitter alloc] initWithSocket:socket ackNum:ack]);
 }
 @end

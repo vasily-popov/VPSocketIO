@@ -23,12 +23,10 @@
     return nil;
 }
 
--(NSString*) urlEncode
+-(NSString*)urlEncode
 {
-    //NSCharacterSet *set = [[NSCharacterSet characterSetWithCharactersInString:@"!*'();:@&=+$,/?%#[]\" {}"] invertedSet];
     return [self stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
 }
-
 
 -(NSArray*)toArray {
     

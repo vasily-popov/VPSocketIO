@@ -19,15 +19,6 @@ typedef enum : NSUInteger {
     
 } VPPacketType;
 
-@protocol VPSocketParsable <NSObject>
-
--(void)parseBinaryData:(NSData*)data;
--(void)parseSocketMessage:(NSString*)message;
-
-
-@end
-
-
 @interface VPSocketPacket : NSObject
 
 @property (nonatomic, strong, readonly) NSString *packetString;

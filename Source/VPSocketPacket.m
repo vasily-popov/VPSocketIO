@@ -11,6 +11,7 @@
 @interface VPSocketPacket()
 {
     int placeholders;
+    NSDictionary*packetStrings;
 }
 
 @property (nonatomic, strong, readonly) NSString* logType;
@@ -37,8 +38,9 @@
 
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"SocketPacket {type:%lu; data: %@; id: %d; placeholders: %d; nsp: %@}", _type, _data, _id, placeholders, _nsp];
+    return [NSString stringWithFormat:@"SocketPacket {type:%@; data: %@; id: %d; placeholders: %d; nsp: %@}", packetStrings[@(_type)], _data, _id, placeholders, _nsp];
 }
+
 
 -(NSString *)logType {
     return @"VPSocketPacket";
@@ -70,6 +72,7 @@
         _type = type;
         _nsp = namespace;
         placeholders = _placeholders;
+         [self setupData];
     }
     return self;
 }
@@ -86,8 +89,21 @@
         _nsp = nsp;
         placeholders = _placeholders;
         _binary = [binary copy];
+        [self setupData];
     }
     return self;
+}
+
+-(void)setupData
+{
+    packetStrings =@{ @(VPPacketTypeConnect) : @"connect",
+                      @(VPPacketTypeDisconnect) : @"disconnect",
+                      @(VPPacketTypeEvent) : @"event",
+                      @(VPPacketTypeAck) : @"ack",
+                      @(VPPacketTypeError) : @"error",
+                      @(VPPacketTypeBinaryEvent) : @"binaryEvent",
+                      @(VPPacketTypeBinaryAck) : @"binaryAck"
+                      };
 }
 
 -(BOOL)addData:(NSData*)data {

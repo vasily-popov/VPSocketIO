@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		9B14BF36A1A6FF987242BC36 /* libPods-VPSocketIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83C1E19BC9A764AA99A52984 /* libPods-VPSocketIO.a */; };
 		F035C7561F75C71B00174C98 /* NSString+VPSocketIO.m in Sources */ = {isa = PBXBuildFile; fileRef = F035C7551F75C71B00174C98 /* NSString+VPSocketIO.m */; };
-		F035C75A1F76635000174C98 /* VPSocketStreamReader.m in Sources */ = {isa = PBXBuildFile; fileRef = F035C7591F76635000174C98 /* VPSocketStreamReader.m */; };
+		F035C75A1F76635000174C98 /* VPSocketStringReader.m in Sources */ = {isa = PBXBuildFile; fileRef = F035C7591F76635000174C98 /* VPSocketStringReader.m */; };
 		F035C75E1F76898400174C98 /* DefaultSocketLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = F035C75D1F76898400174C98 /* DefaultSocketLogger.m */; };
 		F05AF09E1F717B1000DC58C7 /* VPSocketIOClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F05AF09D1F717B1000DC58C7 /* VPSocketIOClient.m */; };
 		F06B19321F71466D003E81B1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F06B19311F71466D003E81B1 /* main.m */; };
@@ -31,8 +31,8 @@
 		901149581199AEC23EC7BB94 /* Pods-VPSocketIO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VPSocketIO.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VPSocketIO/Pods-VPSocketIO.debug.xcconfig"; sourceTree = "<group>"; };
 		F035C7541F75C71B00174C98 /* NSString+VPSocketIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSString+VPSocketIO.h"; path = "Source/NSString+VPSocketIO.h"; sourceTree = "<group>"; };
 		F035C7551F75C71B00174C98 /* NSString+VPSocketIO.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSString+VPSocketIO.m"; path = "Source/NSString+VPSocketIO.m"; sourceTree = "<group>"; };
-		F035C7581F76635000174C98 /* VPSocketStreamReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VPSocketStreamReader.h; path = Source/VPSocketStreamReader.h; sourceTree = "<group>"; };
-		F035C7591F76635000174C98 /* VPSocketStreamReader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VPSocketStreamReader.m; path = Source/VPSocketStreamReader.m; sourceTree = "<group>"; };
+		F035C7581F76635000174C98 /* VPSocketStringReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VPSocketStringReader.h; path = Source/VPSocketStringReader.h; sourceTree = "<group>"; };
+		F035C7591F76635000174C98 /* VPSocketStringReader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VPSocketStringReader.m; path = Source/VPSocketStringReader.m; sourceTree = "<group>"; };
 		F035C75C1F76898400174C98 /* DefaultSocketLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DefaultSocketLogger.h; path = Source/DefaultSocketLogger.h; sourceTree = "<group>"; };
 		F035C75D1F76898400174C98 /* DefaultSocketLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DefaultSocketLogger.m; path = Source/DefaultSocketLogger.m; sourceTree = "<group>"; };
 		F05AF09C1F717B1000DC58C7 /* VPSocketIOClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPSocketIOClient.h; path = Source/VPSocketIOClient.h; sourceTree = "<group>"; };
@@ -49,7 +49,6 @@
 		F06B19411F71466D003E81B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F07857AF1F7198BD00B97C77 /* VPSocketAnyEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPSocketAnyEvent.h; path = Source/VPSocketAnyEvent.h; sourceTree = "<group>"; };
 		F07857B01F7198BD00B97C77 /* VPSocketAnyEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPSocketAnyEvent.m; path = Source/VPSocketAnyEvent.m; sourceTree = "<group>"; };
-		F07857B41F71A90C00B97C77 /* VPSocketIOUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPSocketIOUtils.h; path = Source/VPSocketIOUtils.h; sourceTree = "<group>"; };
 		F07857B81F71AA1C00B97C77 /* VPSocketAckEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPSocketAckEmitter.h; path = Source/VPSocketAckEmitter.h; sourceTree = "<group>"; };
 		F07857B91F71AA1C00B97C77 /* VPSocketAckEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPSocketAckEmitter.m; path = Source/VPSocketAckEmitter.m; sourceTree = "<group>"; };
 		F07857BC1F71B05000B97C77 /* VPSocketEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPSocketEngine.h; path = Source/VPSocketEngine.h; sourceTree = "<group>"; };
@@ -161,11 +160,10 @@
 		F07857B31F71A8D300B97C77 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				F07857B41F71A90C00B97C77 /* VPSocketIOUtils.h */,
 				F035C7541F75C71B00174C98 /* NSString+VPSocketIO.h */,
 				F035C7551F75C71B00174C98 /* NSString+VPSocketIO.m */,
-				F035C7581F76635000174C98 /* VPSocketStreamReader.h */,
-				F035C7591F76635000174C98 /* VPSocketStreamReader.m */,
+				F035C7581F76635000174C98 /* VPSocketStringReader.h */,
+				F035C7591F76635000174C98 /* VPSocketStringReader.m */,
 				F035C75C1F76898400174C98 /* DefaultSocketLogger.h */,
 				F035C75D1F76898400174C98 /* DefaultSocketLogger.m */,
 			);
@@ -336,7 +334,7 @@
 				F06B19321F71466D003E81B1 /* main.m in Sources */,
 				F05AF09E1F717B1000DC58C7 /* VPSocketIOClient.m in Sources */,
 				F035C75E1F76898400174C98 /* DefaultSocketLogger.m in Sources */,
-				F035C75A1F76635000174C98 /* VPSocketStreamReader.m in Sources */,
+				F035C75A1F76635000174C98 /* VPSocketStringReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

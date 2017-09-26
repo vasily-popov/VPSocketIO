@@ -8,9 +8,22 @@
 
 #import "VPSocketEngine.h"
 #import "NSString+VPSocketIO.h"
-#import "VPSocketStreamReader.h"
+#import "VPSocketStringReader.h"
 #import "DefaultSocketLogger.h"
 #import <Jetfire/Jetfire.h>
+
+typedef enum : NSUInteger{
+    VPSocketEnginePacketTypeOpen = 0x0,
+    VPSocketEnginePacketTypeClose = 0x1,
+    VPSocketEnginePacketTypePing = 0x2,
+    VPSocketEnginePacketTypePong = 0x3,
+    VPSocketEnginePacketTypeMessage = 0x4,
+    VPSocketEnginePacketTypeUpgrade = 0x5,
+    VPSocketEnginePacketTypeNoop = 0x6,
+} VPSocketEnginePacketType;
+
+typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*response, NSError*error);
+
 
 @interface VPProbe : NSObject
 
@@ -27,7 +40,9 @@
 @interface VPSocketEngine()<VPSocketEnginePollableProtocol,
                             JFRWebSocketDelegate,
                             NSURLSessionDelegate>
-
+{
+    NSDictionary *stringEnginePacketType;
+}
 @property (nonatomic, strong, readonly) NSString* logType;
 
 @property (nonatomic) BOOL closed;
@@ -183,6 +198,15 @@
     _probeWait = [NSMutableArray array];
     _secure = NO;
     _selfSigned = NO;
+    
+    stringEnginePacketType =@{ @(VPSocketEnginePacketTypeOpen) : @"open",
+                               @(VPSocketEnginePacketTypeClose) : @"close",
+                               @(VPSocketEnginePacketTypePing) : @"ping",
+                               @(VPSocketEnginePacketTypePong) : @"pong",
+                               @(VPSocketEnginePacketTypeMessage) : @"message",
+                               @(VPSocketEnginePacketTypeUpgrade) : @"upgrade",
+                               @(VPSocketEnginePacketTypeNoop) : @"noop"
+                               };
 }
 
 -(void)dealloc {
@@ -318,7 +342,7 @@
 
 -(void) sendWebSocketMessage:(NSString*)message withType:(VPSocketEnginePacketType)type withData:(NSArray*)datas
 {
-    [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Sending ws: %@ as type:%lu", message, type] type:@"SocketEngineWebSocket"];
+    [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Sending ws: %@ as type:%@", message, stringEnginePacketType[@(type)]] type:@"SocketEngineWebSocket"];
     
     [_ws writeString:[NSString stringWithFormat:@"%lu%@",type, message]];
     if(_websocket) {
@@ -624,7 +648,7 @@
 {
     [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Got message:%@",message] type:self.logType];
     
-    VPSocketStreamReader *reader = [[VPSocketStreamReader alloc] init:message];
+    VPSocketStringReader *reader = [[VPSocketStringReader alloc] init:message];
     
     if([message hasPrefix:@"b4"]) {
         [self handleBase64:message];
@@ -791,7 +815,7 @@
     }
 }
 
-- (void)doRequest:(NSURLRequest *)request withCallback:(VPEngineResponseCallBack)callback {
+- (void)doRequest:(NSURLRequest *)request withCallback:(EngineURLSessionDataTaskCallBack)callback {
     
     if(_polling && !_closed && !invalidated && !_fastUpgrade) {
         
@@ -852,7 +876,7 @@
         [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Got poll message:%@", string] type:@"SocketEnginePolling"];
         
         NSCharacterSet* digits = [NSCharacterSet decimalDigitCharacterSet];
-        VPSocketStreamReader *reader = [[VPSocketStreamReader alloc] init:string];
+        VPSocketStringReader *reader = [[VPSocketStringReader alloc] init:string];
         
         while ([reader hasNext]) {
             
@@ -870,7 +894,7 @@
 
 - (void)sendPollMessage:(NSString *)message withType:(VPSocketEnginePacketType)type withData:(NSArray *)array {
     
-    [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Sending poll: %@ as type:%lu", message, type] type:@"SocketEnginePolling"];
+    [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Sending poll: %@ as type:%@", message, stringEnginePacketType[@(type)]] type:@"SocketEnginePolling"];
     
     [_postWait addObject:[NSString stringWithFormat:@"%lu%@", type,message]];
     

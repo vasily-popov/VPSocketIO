@@ -12,18 +12,6 @@
 #import <Foundation/Foundation.h>
 #import <Jetfire/Jetfire.h>
 
-typedef enum : NSUInteger{
-    VPSocketEnginePacketTypeOpen = 0x0,
-    VPSocketEnginePacketTypeClose = 0x1,
-    VPSocketEnginePacketTypePing = 0x2,
-    VPSocketEnginePacketTypePong = 0x3,
-    VPSocketEnginePacketTypeMessage = 0x4,
-    VPSocketEnginePacketTypeUpgrade = 0x5,
-    VPSocketEnginePacketTypeNoop = 0x6,
-} VPSocketEnginePacketType;
-
-typedef void (^VPEngineResponseCallBack)(NSData* data, NSURLResponse*response, NSError*error);
-
 @protocol VPSocketEngineClient <NSObject>
 
 @required
@@ -80,13 +68,6 @@ typedef void (^VPEngineResponseCallBack)(NSData* data, NSURLResponse*response, N
 @property (nonatomic, strong, readonly) NSURLSession *session;
 @property (nonatomic) BOOL waitingForPoll;
 @property (nonatomic) BOOL waitingForPost;
-
-
--(void)doPoll;
--(void)stopPolling;
-
-
--(void)doRequest:(NSURLRequest*)request withCallback:(VPEngineResponseCallBack)callback;
 
 @end
 

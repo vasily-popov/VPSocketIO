@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface VPSocketStreamReader : NSObject
+@interface VPSocketStringReader : NSObject
 
-@property (nonatomic, strong) NSString *message;
+@property (nonatomic, strong, readonly) NSString *message;
 @property (nonatomic) int currentIndex;
 
 -(instancetype)init:(NSString*)message;

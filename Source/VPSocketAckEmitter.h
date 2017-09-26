@@ -12,6 +12,7 @@
 @interface VPSocketAckEmitter : NSObject
 
 -(instancetype)initWithSocket:(id<VPSocketIOClientProtocol>)socket ackNum:(int)ack;
+-(void)emitWith:(NSArray*) items;
 
 @end
 
@@ -19,5 +20,6 @@
 @interface OnAckCallback : NSObject
 
 -(instancetype)initAck:(int)ack items:(NSArray*)items socket:(id<VPSocketIOClientProtocol>)socket;
+-(void)timingOutAfter:(double)seconds callback:(VPScoketAckArrayCallback)callback;
 
 @end
