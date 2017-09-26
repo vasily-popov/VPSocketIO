@@ -211,7 +211,8 @@ typedef enum : NSUInteger {
 }
 
 -(void)setStatus:(VPSocketIOClientStatus)status
-{    
+{
+    _status = status;
     switch (status) {
         case VPSocketIOClientStatusConnected:
             reconnecting = NO;
