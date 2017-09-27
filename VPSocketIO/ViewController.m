@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import <VPSocketIO_iOS/VPSocketIO_iOS.h>
+#import <VPSocketIO/VPSocketIO.h>
 
 @interface ViewController () {
     VPSocketIOClient *socket;

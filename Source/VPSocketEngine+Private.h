@@ -7,7 +7,7 @@
 //
 
 #import "VPSocketEngine.h"
-#import <Jetfire/Jetfire.h>
+#import "JFRWebSocket.h"
 
 typedef enum : NSUInteger{
     VPSocketEnginePacketTypeOpen = 0x0,

@@ -7,16 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F01011581F7BCC2700699669 /* JFRSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = F01011541F7BCC2700699669 /* JFRSecurity.m */; };
+		F01011591F7BCC2700699669 /* JFRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = F01011561F7BCC2700699669 /* JFRWebSocket.m */; };
+		F010115A1F7BCCCC00699669 /* JFRSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = F01011541F7BCC2700699669 /* JFRSecurity.m */; };
+		F010115B1F7BCCCC00699669 /* JFRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = F01011561F7BCC2700699669 /* JFRWebSocket.m */; };
+		F010115C1F7BCCD700699669 /* JFRSecurity.h in Headers */ = {isa = PBXBuildFile; fileRef = F01011551F7BCC2700699669 /* JFRSecurity.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		F010115D1F7BCCD700699669 /* JFRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = F01011571F7BCC2700699669 /* JFRWebSocket.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		F010115E1F7BCCE000699669 /* VPSocketPacket.h in Headers */ = {isa = PBXBuildFile; fileRef = F07857C91F71BA1600B97C77 /* VPSocketPacket.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		F010115F1F7BCCE000699669 /* VPSocketEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = F07857BC1F71B05000B97C77 /* VPSocketEngine.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		F01011601F7BCCE000699669 /* VPSocketEngineProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F07857BF1F71B07900B97C77 /* VPSocketEngineProtocol.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		F01011611F7BCCE000699669 /* VPSocketEngine+EnginePollable.h in Headers */ = {isa = PBXBuildFile; fileRef = F03E86261F7AA29000EF12B7 /* VPSocketEngine+EnginePollable.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		F01011621F7BCCE000699669 /* VPSocketEngine+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = F03E86291F7AA2F100EF12B7 /* VPSocketEngine+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		F01011631F7BCCE000699669 /* VPSocketEngine+EngineWebsocket.h in Headers */ = {isa = PBXBuildFile; fileRef = F08E4F5F1F7AAB370032C8E3 /* VPSocketEngine+EngineWebsocket.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		F01011641F7BCCED00699669 /* VPSocketAckEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = F07857B81F71AA1C00B97C77 /* VPSocketAckEmitter.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		F01011651F7BCCED00699669 /* VPSocketAckManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F07857CC1F71D06F00B97C77 /* VPSocketAckManager.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		F01011661F7BCCED00699669 /* VPSocketAck.h in Headers */ = {isa = PBXBuildFile; fileRef = F08E4F651F7AB3850032C8E3 /* VPSocketAck.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		F01011671F7BCCFA00699669 /* NSString+VPSocketIO.h in Headers */ = {isa = PBXBuildFile; fileRef = F035C7541F75C71B00174C98 /* NSString+VPSocketIO.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		F01011681F7BCCFA00699669 /* VPStringReader.h in Headers */ = {isa = PBXBuildFile; fileRef = F035C7581F76635000174C98 /* VPStringReader.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		F01011691F7BCCFA00699669 /* DefaultSocketLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = F035C75C1F76898400174C98 /* DefaultSocketLogger.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		F06B19321F71466D003E81B1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F06B19311F71466D003E81B1 /* main.m */; };
 		F06B19351F71466D003E81B1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F06B19341F71466D003E81B1 /* AppDelegate.m */; };
 		F06B19381F71466D003E81B1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F06B19371F71466D003E81B1 /* ViewController.m */; };
 		F06B193B1F71466D003E81B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F06B19391F71466D003E81B1 /* Main.storyboard */; };
 		F06B193D1F71466D003E81B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F06B193C1F71466D003E81B1 /* Assets.xcassets */; };
 		F06B19401F71466D003E81B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F06B193E1F71466D003E81B1 /* LaunchScreen.storyboard */; };
-		F08D49861F7BBBDF00ABE3DC /* Jetfire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F08D497D1F7BBACD00ABE3DC /* Jetfire.framework */; };
-		F08E4F721F7ACFEB0032C8E3 /* VPSocketIO_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = F08E4F701F7ACFEB0032C8E3 /* VPSocketIO_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F08E4F751F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F08E4F6E1F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework */; };
-		F08E4F761F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F08E4F6E1F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F08E4F721F7ACFEB0032C8E3 /* VPSocketIO.h in Headers */ = {isa = PBXBuildFile; fileRef = F08E4F701F7ACFEB0032C8E3 /* VPSocketIO.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F08E4F751F7ACFEB0032C8E3 /* VPSocketIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F08E4F6E1F7ACFEB0032C8E3 /* VPSocketIO.framework */; };
+		F08E4F761F7ACFEB0032C8E3 /* VPSocketIO.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F08E4F6E1F7ACFEB0032C8E3 /* VPSocketIO.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F08E4F7E1F7AD2480032C8E3 /* VPSocketPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = F07857CA1F71BA1600B97C77 /* VPSocketPacket.m */; };
 		F08E4F7F1F7AD2480032C8E3 /* VPSocketEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = F07857BD1F71B05000B97C77 /* VPSocketEngine.m */; };
 		F08E4F801F7AD2480032C8E3 /* VPSocketEngine+EnginePollable.m in Sources */ = {isa = PBXBuildFile; fileRef = F03E86271F7AA29000EF12B7 /* VPSocketEngine+EnginePollable.m */; };
@@ -39,27 +56,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F08D497C1F7BBACD00ABE3DC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F08D49771F7BBACD00ABE3DC /* Jetfire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 210EA8091D99642A00A323C8;
-			remoteInfo = "Jetfire-iOS";
-		};
-		F08D497E1F7BBACD00ABE3DC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F08D49771F7BBACD00ABE3DC /* Jetfire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F500263D1DCCB5C200FE4410;
-			remoteInfo = "Jetfire-Mac";
-		};
-		F08D49811F7BBB3600ABE3DC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F08D49771F7BBACD00ABE3DC /* Jetfire.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 210EA8081D99642A00A323C8;
-			remoteInfo = "Jetfire-iOS";
-		};
 		F08E4F731F7ACFEB0032C8E3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F06B19251F71466C003E81B1 /* Project object */;
@@ -76,7 +72,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F08E4F761F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework in Embed Frameworks */,
+				F08E4F761F7ACFEB0032C8E3 /* VPSocketIO.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -84,6 +80,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F01011541F7BCC2700699669 /* JFRSecurity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JFRSecurity.m; path = jetfire/JFRSecurity.m; sourceTree = SOURCE_ROOT; };
+		F01011551F7BCC2700699669 /* JFRSecurity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JFRSecurity.h; path = jetfire/JFRSecurity.h; sourceTree = SOURCE_ROOT; };
+		F01011561F7BCC2700699669 /* JFRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JFRWebSocket.m; path = jetfire/JFRWebSocket.m; sourceTree = SOURCE_ROOT; };
+		F01011571F7BCC2700699669 /* JFRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JFRWebSocket.h; path = jetfire/JFRWebSocket.h; sourceTree = SOURCE_ROOT; };
 		F035C7541F75C71B00174C98 /* NSString+VPSocketIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSString+VPSocketIO.h"; path = "Source/NSString+VPSocketIO.h"; sourceTree = "<group>"; };
 		F035C7551F75C71B00174C98 /* NSString+VPSocketIO.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSString+VPSocketIO.m"; path = "Source/NSString+VPSocketIO.m"; sourceTree = "<group>"; };
 		F035C7581F76635000174C98 /* VPStringReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VPStringReader.h; path = Source/VPStringReader.h; sourceTree = "<group>"; };
@@ -95,7 +95,7 @@
 		F03E86291F7AA2F100EF12B7 /* VPSocketEngine+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "VPSocketEngine+Private.h"; path = "Source/VPSocketEngine+Private.h"; sourceTree = "<group>"; };
 		F05AF09C1F717B1000DC58C7 /* VPSocketIOClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPSocketIOClient.h; path = Source/VPSocketIOClient.h; sourceTree = "<group>"; };
 		F05AF09D1F717B1000DC58C7 /* VPSocketIOClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPSocketIOClient.m; path = Source/VPSocketIOClient.m; sourceTree = "<group>"; };
-		F06B192D1F71466C003E81B1 /* VPSocketIO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VPSocketIO.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F06B192D1F71466C003E81B1 /* VPSocketIOApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VPSocketIOApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F06B19311F71466D003E81B1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F06B19331F71466D003E81B1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F06B19341F71466D003E81B1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -117,15 +117,14 @@
 		F07857CA1F71BA1600B97C77 /* VPSocketPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPSocketPacket.m; path = Source/VPSocketPacket.m; sourceTree = "<group>"; };
 		F07857CC1F71D06F00B97C77 /* VPSocketAckManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPSocketAckManager.h; path = Source/VPSocketAckManager.h; sourceTree = "<group>"; };
 		F07857CD1F71D06F00B97C77 /* VPSocketAckManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPSocketAckManager.m; path = Source/VPSocketAckManager.m; sourceTree = "<group>"; };
-		F08D49771F7BBACD00ABE3DC /* Jetfire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Jetfire.xcodeproj; path = jetfire/jetfire/Jetfire.xcodeproj; sourceTree = "<group>"; };
 		F08E4F5F1F7AAB370032C8E3 /* VPSocketEngine+EngineWebsocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "VPSocketEngine+EngineWebsocket.h"; path = "Source/VPSocketEngine+EngineWebsocket.h"; sourceTree = "<group>"; };
 		F08E4F601F7AAB370032C8E3 /* VPSocketEngine+EngineWebsocket.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "VPSocketEngine+EngineWebsocket.m"; path = "Source/VPSocketEngine+EngineWebsocket.m"; sourceTree = "<group>"; };
 		F08E4F621F7AB21E0032C8E3 /* VPSocketOnAckCallback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VPSocketOnAckCallback.h; path = Source/VPSocketOnAckCallback.h; sourceTree = "<group>"; };
 		F08E4F631F7AB21E0032C8E3 /* VPSocketOnAckCallback.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VPSocketOnAckCallback.m; path = Source/VPSocketOnAckCallback.m; sourceTree = "<group>"; };
 		F08E4F651F7AB3850032C8E3 /* VPSocketAck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VPSocketAck.h; path = Source/VPSocketAck.h; sourceTree = "<group>"; };
 		F08E4F661F7AB3850032C8E3 /* VPSocketAck.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VPSocketAck.m; path = Source/VPSocketAck.m; sourceTree = "<group>"; };
-		F08E4F6E1F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VPSocketIO_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F08E4F701F7ACFEB0032C8E3 /* VPSocketIO_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VPSocketIO_iOS.h; sourceTree = "<group>"; };
+		F08E4F6E1F7ACFEB0032C8E3 /* VPSocketIO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VPSocketIO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F08E4F701F7ACFEB0032C8E3 /* VPSocketIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VPSocketIO.h; sourceTree = "<group>"; };
 		F08E4F711F7ACFEB0032C8E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F08E4F7B1F7AD1030032C8E3 /* VPSocketLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VPSocketLogger.h; path = Source/VPSocketLogger.h; sourceTree = "<group>"; };
 		F08E4F7C1F7AD1030032C8E3 /* VPSocketLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VPSocketLogger.m; path = Source/VPSocketLogger.m; sourceTree = "<group>"; };
@@ -136,7 +135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F08E4F751F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework in Frameworks */,
+				F08E4F751F7ACFEB0032C8E3 /* VPSocketIO.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,13 +143,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F08D49861F7BBBDF00ABE3DC /* Jetfire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F01011531F7BCC0B00699669 /* Jetfire */ = {
+			isa = PBXGroup;
+			children = (
+				F01011551F7BCC2700699669 /* JFRSecurity.h */,
+				F01011541F7BCC2700699669 /* JFRSecurity.m */,
+				F01011571F7BCC2700699669 /* JFRWebSocket.h */,
+				F01011561F7BCC2700699669 /* JFRWebSocket.m */,
+			);
+			name = Jetfire;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		F05AF09A1F71746000DC58C7 /* Source */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,7 +188,7 @@
 		F06B19241F71466C003E81B1 = {
 			isa = PBXGroup;
 			children = (
-				F08D49771F7BBACD00ABE3DC /* Jetfire.xcodeproj */,
+				F01011531F7BCC0B00699669 /* Jetfire */,
 				F05AF09A1F71746000DC58C7 /* Source */,
 				F06B192F1F71466C003E81B1 /* VPSocketIO */,
 				F08E4F6F1F7ACFEB0032C8E3 /* VPSocketIO-iOS */,
@@ -189,8 +199,8 @@
 		F06B192E1F71466C003E81B1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F06B192D1F71466C003E81B1 /* VPSocketIO.app */,
-				F08E4F6E1F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework */,
+				F06B192D1F71466C003E81B1 /* VPSocketIOApp.app */,
+				F08E4F6E1F7ACFEB0032C8E3 /* VPSocketIO.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -273,19 +283,10 @@
 			name = Parse;
 			sourceTree = "<group>";
 		};
-		F08D49781F7BBACD00ABE3DC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F08D497D1F7BBACD00ABE3DC /* Jetfire.framework */,
-				F08D497F1F7BBACD00ABE3DC /* Jetfire.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		F08E4F6F1F7ACFEB0032C8E3 /* VPSocketIO-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				F08E4F701F7ACFEB0032C8E3 /* VPSocketIO_iOS.h */,
+				F08E4F701F7ACFEB0032C8E3 /* VPSocketIO.h */,
 				F08E4F711F7ACFEB0032C8E3 /* Info.plist */,
 			);
 			path = "VPSocketIO-iOS";
@@ -298,21 +299,35 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F08E4F721F7ACFEB0032C8E3 /* VPSocketIO_iOS.h in Headers */,
+				F08E4F721F7ACFEB0032C8E3 /* VPSocketIO.h in Headers */,
 				F08E4F8D1F7AD60F0032C8E3 /* VPSocketLogger.h in Headers */,
 				F08E4F8E1F7AD60F0032C8E3 /* VPSocketIOClient.h in Headers */,
 				F08E4F8F1F7AD60F0032C8E3 /* VPSocketAnyEvent.h in Headers */,
 				F08E4F911F7AD67E0032C8E3 /* VPSocketOnAckCallback.h in Headers */,
 				F08E4F901F7AD60F0032C8E3 /* VPSocketIOClientProtocol.h in Headers */,
+				F010115C1F7BCCD700699669 /* JFRSecurity.h in Headers */,
+				F010115D1F7BCCD700699669 /* JFRWebSocket.h in Headers */,
+				F010115E1F7BCCE000699669 /* VPSocketPacket.h in Headers */,
+				F010115F1F7BCCE000699669 /* VPSocketEngine.h in Headers */,
+				F01011601F7BCCE000699669 /* VPSocketEngineProtocol.h in Headers */,
+				F01011611F7BCCE000699669 /* VPSocketEngine+EnginePollable.h in Headers */,
+				F01011621F7BCCE000699669 /* VPSocketEngine+Private.h in Headers */,
+				F01011631F7BCCE000699669 /* VPSocketEngine+EngineWebsocket.h in Headers */,
+				F01011641F7BCCED00699669 /* VPSocketAckEmitter.h in Headers */,
+				F01011651F7BCCED00699669 /* VPSocketAckManager.h in Headers */,
+				F01011671F7BCCFA00699669 /* NSString+VPSocketIO.h in Headers */,
+				F01011681F7BCCFA00699669 /* VPStringReader.h in Headers */,
+				F01011691F7BCCFA00699669 /* DefaultSocketLogger.h in Headers */,
+				F01011661F7BCCED00699669 /* VPSocketAck.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		F06B192C1F71466C003E81B1 /* VPSocketIO */ = {
+		F06B192C1F71466C003E81B1 /* VPSocketIOApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F06B19441F71466D003E81B1 /* Build configuration list for PBXNativeTarget "VPSocketIO" */;
+			buildConfigurationList = F06B19441F71466D003E81B1 /* Build configuration list for PBXNativeTarget "VPSocketIOApp" */;
 			buildPhases = (
 				F06B19291F71466C003E81B1 /* Sources */,
 				F06B192A1F71466C003E81B1 /* Frameworks */,
@@ -324,14 +339,14 @@
 			dependencies = (
 				F08E4F741F7ACFEB0032C8E3 /* PBXTargetDependency */,
 			);
-			name = VPSocketIO;
+			name = VPSocketIOApp;
 			productName = VPSocketIO;
-			productReference = F06B192D1F71466C003E81B1 /* VPSocketIO.app */;
+			productReference = F06B192D1F71466C003E81B1 /* VPSocketIOApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F08E4F6D1F7ACFEB0032C8E3 /* VPSocketIO-iOS */ = {
+		F08E4F6D1F7ACFEB0032C8E3 /* VPSocketIO */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F08E4F771F7ACFEB0032C8E3 /* Build configuration list for PBXNativeTarget "VPSocketIO-iOS" */;
+			buildConfigurationList = F08E4F771F7ACFEB0032C8E3 /* Build configuration list for PBXNativeTarget "VPSocketIO" */;
 			buildPhases = (
 				F08E4F691F7ACFEB0032C8E3 /* Sources */,
 				F08E4F6A1F7ACFEB0032C8E3 /* Frameworks */,
@@ -341,11 +356,10 @@
 			buildRules = (
 			);
 			dependencies = (
-				F08D49821F7BBB3600ABE3DC /* PBXTargetDependency */,
 			);
-			name = "VPSocketIO-iOS";
+			name = VPSocketIO;
 			productName = "VPSocketIO-iOS";
-			productReference = F08E4F6E1F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework */;
+			productReference = F08E4F6E1F7ACFEB0032C8E3 /* VPSocketIO.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -380,36 +394,13 @@
 			mainGroup = F06B19241F71466C003E81B1;
 			productRefGroup = F06B192E1F71466C003E81B1 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = F08D49781F7BBACD00ABE3DC /* Products */;
-					ProjectRef = F08D49771F7BBACD00ABE3DC /* Jetfire.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
-				F06B192C1F71466C003E81B1 /* VPSocketIO */,
-				F08E4F6D1F7ACFEB0032C8E3 /* VPSocketIO-iOS */,
+				F06B192C1F71466C003E81B1 /* VPSocketIOApp */,
+				F08E4F6D1F7ACFEB0032C8E3 /* VPSocketIO */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		F08D497D1F7BBACD00ABE3DC /* Jetfire.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Jetfire.framework;
-			remoteRef = F08D497C1F7BBACD00ABE3DC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F08D497F1F7BBACD00ABE3DC /* Jetfire.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Jetfire.framework;
-			remoteRef = F08D497E1F7BBACD00ABE3DC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F06B192B1F71466C003E81B1 /* Resources */ = {
@@ -436,8 +427,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F01011591F7BCC2700699669 /* JFRWebSocket.m in Sources */,
 				F06B19381F71466D003E81B1 /* ViewController.m in Sources */,
 				F06B19351F71466D003E81B1 /* AppDelegate.m in Sources */,
+				F01011581F7BCC2700699669 /* JFRSecurity.m in Sources */,
 				F06B19321F71466D003E81B1 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -446,6 +439,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F010115A1F7BCCCC00699669 /* JFRSecurity.m in Sources */,
+				F010115B1F7BCCCC00699669 /* JFRWebSocket.m in Sources */,
 				F08E4F861F7AD2630032C8E3 /* NSString+VPSocketIO.m in Sources */,
 				F08E4F871F7AD2630032C8E3 /* VPStringReader.m in Sources */,
 				F08E4F881F7AD2630032C8E3 /* DefaultSocketLogger.m in Sources */,
@@ -466,14 +461,9 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F08D49821F7BBB3600ABE3DC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Jetfire-iOS";
-			targetProxy = F08D49811F7BBB3600ABE3DC /* PBXContainerItemProxy */;
-		};
 		F08E4F741F7ACFEB0032C8E3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F08E4F6D1F7ACFEB0032C8E3 /* VPSocketIO-iOS */;
+			target = F08E4F6D1F7ACFEB0032C8E3 /* VPSocketIO */;
 			targetProxy = F08E4F731F7ACFEB0032C8E3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -610,7 +600,7 @@
 				DEVELOPMENT_TEAM = 7EB863BHDM;
 				INFOPLIST_FILE = VPSocketIO/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.vascome.VPSocketIO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vascome.VPSocketIOApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -623,7 +613,7 @@
 				DEVELOPMENT_TEAM = 7EB863BHDM;
 				INFOPLIST_FILE = VPSocketIO/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.vascome.VPSocketIO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vascome.VPSocketIOApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -648,7 +638,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.vascome.VPSocketIO-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.vascome.VPSocketIO;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -677,7 +667,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.vascome.VPSocketIO-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.vascome.VPSocketIO;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -698,7 +688,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F06B19441F71466D003E81B1 /* Build configuration list for PBXNativeTarget "VPSocketIO" */ = {
+		F06B19441F71466D003E81B1 /* Build configuration list for PBXNativeTarget "VPSocketIOApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F06B19451F71466D003E81B1 /* Debug */,
@@ -707,7 +697,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F08E4F771F7ACFEB0032C8E3 /* Build configuration list for PBXNativeTarget "VPSocketIO-iOS" */ = {
+		F08E4F771F7ACFEB0032C8E3 /* Build configuration list for PBXNativeTarget "VPSocketIO" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F08E4F781F7ACFEB0032C8E3 /* Debug */,
