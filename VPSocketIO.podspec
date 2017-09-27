@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "VPSocketIO"
-  s.version      = "0.0.4"
+  s.version      = "1.0.0"
   s.summary      = "Socket.IO client for iOS"
   s.description  = <<-DESC
                    Socket.IO-client for iOS.
