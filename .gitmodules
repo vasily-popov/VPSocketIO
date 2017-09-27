@@ -1,0 +1,3 @@
+[submodule "jetfire/jetfire"]
+	path = jetfire/jetfire
+	url = git@github.com:acmacalister/jetfire.git

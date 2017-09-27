@@ -7,14 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4F80C024F0F23C9DBCACD6A4 /* libPods-VPSocketIO-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CB34B04ED99C1F79494D5BD /* libPods-VPSocketIO-iOS.a */; };
-		9B14BF36A1A6FF987242BC36 /* libPods-VPSocketIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83C1E19BC9A764AA99A52984 /* libPods-VPSocketIO.a */; };
 		F06B19321F71466D003E81B1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F06B19311F71466D003E81B1 /* main.m */; };
 		F06B19351F71466D003E81B1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F06B19341F71466D003E81B1 /* AppDelegate.m */; };
 		F06B19381F71466D003E81B1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F06B19371F71466D003E81B1 /* ViewController.m */; };
 		F06B193B1F71466D003E81B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F06B19391F71466D003E81B1 /* Main.storyboard */; };
 		F06B193D1F71466D003E81B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F06B193C1F71466D003E81B1 /* Assets.xcassets */; };
 		F06B19401F71466D003E81B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F06B193E1F71466D003E81B1 /* LaunchScreen.storyboard */; };
+		F08D49861F7BBBDF00ABE3DC /* Jetfire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F08D497D1F7BBACD00ABE3DC /* Jetfire.framework */; };
 		F08E4F721F7ACFEB0032C8E3 /* VPSocketIO_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = F08E4F701F7ACFEB0032C8E3 /* VPSocketIO_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F08E4F751F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F08E4F6E1F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework */; };
 		F08E4F761F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F08E4F6E1F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -40,6 +39,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		F08D497C1F7BBACD00ABE3DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F08D49771F7BBACD00ABE3DC /* Jetfire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 210EA8091D99642A00A323C8;
+			remoteInfo = "Jetfire-iOS";
+		};
+		F08D497E1F7BBACD00ABE3DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F08D49771F7BBACD00ABE3DC /* Jetfire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F500263D1DCCB5C200FE4410;
+			remoteInfo = "Jetfire-Mac";
+		};
+		F08D49811F7BBB3600ABE3DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F08D49771F7BBACD00ABE3DC /* Jetfire.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 210EA8081D99642A00A323C8;
+			remoteInfo = "Jetfire-iOS";
+		};
 		F08E4F731F7ACFEB0032C8E3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F06B19251F71466C003E81B1 /* Project object */;
@@ -64,11 +84,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		6E6A8E1D45E502E00ED15106 /* Pods-VPSocketIO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VPSocketIO.release.xcconfig"; path = "Pods/Target Support Files/Pods-VPSocketIO/Pods-VPSocketIO.release.xcconfig"; sourceTree = "<group>"; };
-		83C1E19BC9A764AA99A52984 /* libPods-VPSocketIO.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VPSocketIO.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		901149581199AEC23EC7BB94 /* Pods-VPSocketIO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VPSocketIO.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VPSocketIO/Pods-VPSocketIO.debug.xcconfig"; sourceTree = "<group>"; };
-		9CB34B04ED99C1F79494D5BD /* libPods-VPSocketIO-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VPSocketIO-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED28E06FD9B018B38AB3D962 /* Pods-VPSocketIO-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VPSocketIO-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VPSocketIO-iOS/Pods-VPSocketIO-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		F035C7541F75C71B00174C98 /* NSString+VPSocketIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSString+VPSocketIO.h"; path = "Source/NSString+VPSocketIO.h"; sourceTree = "<group>"; };
 		F035C7551F75C71B00174C98 /* NSString+VPSocketIO.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSString+VPSocketIO.m"; path = "Source/NSString+VPSocketIO.m"; sourceTree = "<group>"; };
 		F035C7581F76635000174C98 /* VPStringReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VPStringReader.h; path = Source/VPStringReader.h; sourceTree = "<group>"; };
@@ -102,6 +117,7 @@
 		F07857CA1F71BA1600B97C77 /* VPSocketPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPSocketPacket.m; path = Source/VPSocketPacket.m; sourceTree = "<group>"; };
 		F07857CC1F71D06F00B97C77 /* VPSocketAckManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPSocketAckManager.h; path = Source/VPSocketAckManager.h; sourceTree = "<group>"; };
 		F07857CD1F71D06F00B97C77 /* VPSocketAckManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPSocketAckManager.m; path = Source/VPSocketAckManager.m; sourceTree = "<group>"; };
+		F08D49771F7BBACD00ABE3DC /* Jetfire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Jetfire.xcodeproj; path = jetfire/jetfire/Jetfire.xcodeproj; sourceTree = "<group>"; };
 		F08E4F5F1F7AAB370032C8E3 /* VPSocketEngine+EngineWebsocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "VPSocketEngine+EngineWebsocket.h"; path = "Source/VPSocketEngine+EngineWebsocket.h"; sourceTree = "<group>"; };
 		F08E4F601F7AAB370032C8E3 /* VPSocketEngine+EngineWebsocket.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "VPSocketEngine+EngineWebsocket.m"; path = "Source/VPSocketEngine+EngineWebsocket.m"; sourceTree = "<group>"; };
 		F08E4F621F7AB21E0032C8E3 /* VPSocketOnAckCallback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VPSocketOnAckCallback.h; path = Source/VPSocketOnAckCallback.h; sourceTree = "<group>"; };
@@ -113,7 +129,6 @@
 		F08E4F711F7ACFEB0032C8E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F08E4F7B1F7AD1030032C8E3 /* VPSocketLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VPSocketLogger.h; path = Source/VPSocketLogger.h; sourceTree = "<group>"; };
 		F08E4F7C1F7AD1030032C8E3 /* VPSocketLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VPSocketLogger.m; path = Source/VPSocketLogger.m; sourceTree = "<group>"; };
-		F58809151FFD78744036DF32 /* Pods-VPSocketIO-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VPSocketIO-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-VPSocketIO-iOS/Pods-VPSocketIO-iOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +136,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B14BF36A1A6FF987242BC36 /* libPods-VPSocketIO.a in Frameworks */,
 				F08E4F751F7ACFEB0032C8E3 /* VPSocketIO_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -130,33 +144,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F80C024F0F23C9DBCACD6A4 /* libPods-VPSocketIO-iOS.a in Frameworks */,
+				F08D49861F7BBBDF00ABE3DC /* Jetfire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4DEB8C91FF02E2F6C26C35D2 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				83C1E19BC9A764AA99A52984 /* libPods-VPSocketIO.a */,
-				9CB34B04ED99C1F79494D5BD /* libPods-VPSocketIO-iOS.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		708991CF7745A1710D7B5991 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				901149581199AEC23EC7BB94 /* Pods-VPSocketIO.debug.xcconfig */,
-				6E6A8E1D45E502E00ED15106 /* Pods-VPSocketIO.release.xcconfig */,
-				ED28E06FD9B018B38AB3D962 /* Pods-VPSocketIO-iOS.debug.xcconfig */,
-				F58809151FFD78744036DF32 /* Pods-VPSocketIO-iOS.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		F05AF09A1F71746000DC58C7 /* Source */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,12 +178,11 @@
 		F06B19241F71466C003E81B1 = {
 			isa = PBXGroup;
 			children = (
+				F08D49771F7BBACD00ABE3DC /* Jetfire.xcodeproj */,
 				F05AF09A1F71746000DC58C7 /* Source */,
 				F06B192F1F71466C003E81B1 /* VPSocketIO */,
 				F08E4F6F1F7ACFEB0032C8E3 /* VPSocketIO-iOS */,
 				F06B192E1F71466C003E81B1 /* Products */,
-				708991CF7745A1710D7B5991 /* Pods */,
-				4DEB8C91FF02E2F6C26C35D2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -280,6 +273,15 @@
 			name = Parse;
 			sourceTree = "<group>";
 		};
+		F08D49781F7BBACD00ABE3DC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F08D497D1F7BBACD00ABE3DC /* Jetfire.framework */,
+				F08D497F1F7BBACD00ABE3DC /* Jetfire.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F08E4F6F1F7ACFEB0032C8E3 /* VPSocketIO-iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -312,12 +314,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F06B19441F71466D003E81B1 /* Build configuration list for PBXNativeTarget "VPSocketIO" */;
 			buildPhases = (
-				973089AD1095D2303FE00DED /* [CP] Check Pods Manifest.lock */,
 				F06B19291F71466C003E81B1 /* Sources */,
 				F06B192A1F71466C003E81B1 /* Frameworks */,
 				F06B192B1F71466C003E81B1 /* Resources */,
-				528A9D138F6478A750A30A58 /* [CP] Embed Pods Frameworks */,
-				B7FE5826C7DDEFB63FD107D6 /* [CP] Copy Pods Resources */,
 				F08E4F7A1F7ACFEB0032C8E3 /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -334,16 +333,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F08E4F771F7ACFEB0032C8E3 /* Build configuration list for PBXNativeTarget "VPSocketIO-iOS" */;
 			buildPhases = (
-				AA5774050C271EFD2FCD6FA3 /* [CP] Check Pods Manifest.lock */,
 				F08E4F691F7ACFEB0032C8E3 /* Sources */,
 				F08E4F6A1F7ACFEB0032C8E3 /* Frameworks */,
 				F08E4F6B1F7ACFEB0032C8E3 /* Headers */,
 				F08E4F6C1F7ACFEB0032C8E3 /* Resources */,
-				A680704464618D653CAF9FEC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F08D49821F7BBB3600ABE3DC /* PBXTargetDependency */,
 			);
 			name = "VPSocketIO-iOS";
 			productName = "VPSocketIO-iOS";
@@ -382,6 +380,12 @@
 			mainGroup = F06B19241F71466C003E81B1;
 			productRefGroup = F06B192E1F71466C003E81B1 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F08D49781F7BBACD00ABE3DC /* Products */;
+					ProjectRef = F08D49771F7BBACD00ABE3DC /* Jetfire.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				F06B192C1F71466C003E81B1 /* VPSocketIO */,
@@ -389,6 +393,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		F08D497D1F7BBACD00ABE3DC /* Jetfire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Jetfire.framework;
+			remoteRef = F08D497C1F7BBACD00ABE3DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F08D497F1F7BBACD00ABE3DC /* Jetfire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Jetfire.framework;
+			remoteRef = F08D497E1F7BBACD00ABE3DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F06B192B1F71466C003E81B1 /* Resources */ = {
@@ -409,90 +430,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		528A9D138F6478A750A30A58 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VPSocketIO/Pods-VPSocketIO-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		973089AD1095D2303FE00DED /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-VPSocketIO-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A680704464618D653CAF9FEC /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VPSocketIO-iOS/Pods-VPSocketIO-iOS-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AA5774050C271EFD2FCD6FA3 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-VPSocketIO-iOS-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B7FE5826C7DDEFB63FD107D6 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VPSocketIO/Pods-VPSocketIO-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F06B19291F71466C003E81B1 /* Sources */ = {
@@ -529,6 +466,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		F08D49821F7BBB3600ABE3DC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Jetfire-iOS";
+			targetProxy = F08D49811F7BBB3600ABE3DC /* PBXContainerItemProxy */;
+		};
 		F08E4F741F7ACFEB0032C8E3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F08E4F6D1F7ACFEB0032C8E3 /* VPSocketIO-iOS */;
@@ -662,7 +604,6 @@
 		};
 		F06B19451F71466D003E81B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 901149581199AEC23EC7BB94 /* Pods-VPSocketIO.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -676,7 +617,6 @@
 		};
 		F06B19461F71466D003E81B1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6E6A8E1D45E502E00ED15106 /* Pods-VPSocketIO.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -690,12 +630,12 @@
 		};
 		F08E4F781F7ACFEB0032C8E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ED28E06FD9B018B38AB3D962 /* Pods-VPSocketIO-iOS.debug.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -719,12 +659,12 @@
 		};
 		F08E4F791F7ACFEB0032C8E3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F58809151FFD78744036DF32 /* Pods-VPSocketIO-iOS.release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;

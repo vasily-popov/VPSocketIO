@@ -16,7 +16,7 @@
 {
     [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Sending ws: %@ as type:%@", message, self.stringEnginePacketType[@(type)]] type:@"SocketEngineWebSocket"];
     
-    [self.ws writeString:[NSString stringWithFormat:@"%lu%@",type, message]];
+    [self.ws writeString:[NSString stringWithFormat:@"%lu%@",(unsigned long)type, message]];
     if(self.websocket)
     {
         for (NSData *data in datas)

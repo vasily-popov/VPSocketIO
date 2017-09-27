@@ -85,7 +85,7 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
 // Also make sure we're on the engineQueue since we're touching postWait
 -(void) disconnectPolling
 {
-    [self.postWait addObject: [NSString stringWithFormat:@"%lu", VPSocketEnginePacketTypeClose]];
+    [self.postWait addObject: [NSString stringWithFormat:@"%lu", (unsigned long)VPSocketEnginePacketTypeClose]];
     [self doRequest:[self createRequestForPostWithPostWait] withCallback:nil];
 }
 
@@ -116,7 +116,7 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
     
     [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Sending poll: %@ as type:%@", message, self.stringEnginePacketType[@(type)]] type:@"SocketEnginePolling"];
     
-    [self.postWait addObject:[NSString stringWithFormat:@"%lu%@", type,message]];
+    [self.postWait addObject:[NSString stringWithFormat:@"%lu%@", (unsigned long)type,message]];
     
     if(!self.websocket) {
         for (NSData *data in array) {
@@ -202,7 +202,7 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
 {
     NSMutableString* postStr = [NSMutableString string];;
     for (NSString *packet in self.postWait) {
-        [postStr appendFormat:@"%ld:%@",packet.length, packet];
+        [postStr appendFormat:@"%ld:%@",(unsigned long)packet.length, packet];
     }
     
     [self.postWait removeAllObjects];
