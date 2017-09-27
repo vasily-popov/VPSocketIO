@@ -17,5 +17,5 @@ Pod::Spec.new do |s|
     :tag => "#{s.version}",
     :submodules => true
   }
-  s.source_files  = "Source/*.{h,m}, jetfire/*.{h,m}"
+  s.source_files  = "Source/*.{h,m}", "jetfire/*.{h,m}"
 end
