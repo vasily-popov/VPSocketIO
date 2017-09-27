@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "VPSocketIO"
-  s.version      = "0.0.3"
+  s.version      = "0.0.4"
   s.summary      = "Socket.IO client for iOS"
   s.description  = <<-DESC
                    Socket.IO-client for iOS.
@@ -17,5 +17,5 @@ Pod::Spec.new do |s|
     :tag => "#{s.version}",
     :submodules => true
   }
-  s.source_files  = "Source/*.{h,m}, jetfire/*{h,m}"
+  s.source_files  = "Source/*.{h,m}, jetfire/*.{h,m}"
 end
