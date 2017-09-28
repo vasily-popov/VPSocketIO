@@ -31,6 +31,13 @@
     [self socketExample];
     
 }
+- (IBAction)disconnect:(id)sender {
+    
+    [socket removeAllHandlers];
+    [socket disconnect];
+    socket = nil;
+    
+}
 
 -(void)socketExample{
     NSString *urlString = @"http://localhost:8900";

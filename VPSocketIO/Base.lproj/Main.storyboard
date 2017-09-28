@@ -22,16 +22,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Uv-Fv-Yiz">
-                                <rect key="frame" x="164.5" y="318.5" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                                <rect key="frame" x="158" y="318.5" width="59" height="30"/>
+                                <state key="normal" title="Connect"/>
                                 <connections>
                                     <action selector="buttonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hzi-Nq-NFc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VQ6-Z9-1hn">
+                                <rect key="frame" x="148" y="366" width="78" height="30"/>
+                                <state key="normal" title="Disconnect"/>
+                                <connections>
+                                    <action selector="disconnect:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dAJ-lY-KKa"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="VQ6-Z9-1hn" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="93p-1u-Nfa"/>
                             <constraint firstItem="7Uv-Fv-Yiz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="GIy-pH-0Fs"/>
+                            <constraint firstItem="VQ6-Z9-1hn" firstAttribute="top" secondItem="7Uv-Fv-Yiz" secondAttribute="bottom" constant="17.5" id="Zwf-12-N5P"/>
                             <constraint firstItem="7Uv-Fv-Yiz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dQY-q6-vpC"/>
                         </constraints>
                     </view>

@@ -379,9 +379,11 @@
 
 -(void)didError:(NSString*)reason
 {
-    [DefaultSocketLogger.logger error:reason type:self.logType];
-    [client engineDidError:reason];
-    [self disconnect:reason];
+    if(!self.closed) {
+        [DefaultSocketLogger.logger error:reason type:self.logType];
+        [client engineDidError:reason];
+        [self disconnect:reason];
+    }
 }
 
 -(void) checkAndHandleEngineError:(NSString*) message
@@ -674,7 +676,9 @@
 
 - (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(nullable NSError *)error
 {
-    [DefaultSocketLogger.logger error:@"Engine URLSession became invalid" type:self.logType];
+    if(!self.closed) {
+        [DefaultSocketLogger.logger error:@"Engine URLSession became invalid" type:self.logType];
+    }
     [self didError:@"Engine URLSession became invalid"];
 }
 
