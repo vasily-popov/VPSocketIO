@@ -71,6 +71,8 @@ NSString *const kSocketEventStatusChange       = @"statusChange";
         _config = [config mutableCopy];
         _socketURL = socketURL;
         
+        BOOL logEnabled = NO;
+        
         if([socketURL.absoluteString hasPrefix:@"https://"])
         {
             [self.config setValue:@YES forKey:@"secure"];
@@ -95,12 +97,12 @@ NSString *const kSocketEventStatusChange       = @"statusChange";
             
             if([key isEqualToString:@"log"])
             {
-                DefaultSocketLogger.logger.log = [value boolValue];
+                logEnabled = [value boolValue];
             }
             
             if([key isEqualToString:@"logger"])
             {
-                DefaultSocketLogger.logger = value;
+                [DefaultSocketLogger setLogger:value];
             }
             
             if([key isEqualToString:@"handleQueue"])
@@ -118,6 +120,12 @@ NSString *const kSocketEventStatusChange       = @"statusChange";
         if([self.config objectForKey:@"path"] == nil) {
             [self.config setValue:@"/socket.io/" forKey:@"path"];
         }
+        
+        if(DefaultSocketLogger.logger == nil) {
+            [DefaultSocketLogger setLogger:[VPSocketLogger new]];
+        }
+        
+        DefaultSocketLogger.logger.log = logEnabled;
     }
     return self;
 }
@@ -174,6 +182,7 @@ NSString *const kSocketEventStatusChange       = @"statusChange";
 {
     [DefaultSocketLogger.logger log:@"Client is being released" type:self.logType];
     [_engine disconnect: @"Client Deinit"];
+    [DefaultSocketLogger setLogger:nil];
 }
 
 

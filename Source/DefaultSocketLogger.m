@@ -17,13 +17,7 @@ static VPSocketLogger *logInstance;
 }
 
 +(VPSocketLogger*)logger {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-    {
-        logInstance = [VPSocketLogger new];
-    });
     return logInstance;
-    
 }
 
 @end

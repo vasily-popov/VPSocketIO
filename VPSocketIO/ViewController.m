@@ -9,6 +9,30 @@
 #import "ViewController.h"
 #import <VPSocketIO/VPSocketIO.h>
 
+
+@interface ClientSocketLogger : VPSocketLogger
+
+@end
+
+@implementation ClientSocketLogger
+
+-(void) log:(NSString*)message type:(NSString*)type
+{
+    NSLog(@"ClientSocket MESSAGE: %@", message);
+}
+
+-(void) error:(NSString*)message type:(NSString*)type
+{
+    NSLog(@"ClientSocket ERROR %@", message);
+}
+
+-(void)dealloc {
+    
+}
+
+@end
+
+
 @interface ViewController () {
     VPSocketIOClient *socket;
 }
@@ -41,8 +65,11 @@
 
 -(void)socketExample{
     NSString *urlString = @"http://localhost:8900";
+    
+    ClientSocketLogger*logger = [ClientSocketLogger new];
     socket = [[VPSocketIOClient alloc] init:[NSURL URLWithString:urlString]
                                  withConfig:@{@"log": @YES
+                                              @"logger":logger
                                               }];
     
     
