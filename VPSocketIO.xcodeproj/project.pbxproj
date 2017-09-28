@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F01011581F7BCC2700699669 /* JFRSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = F01011541F7BCC2700699669 /* JFRSecurity.m */; };
-		F01011591F7BCC2700699669 /* JFRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = F01011561F7BCC2700699669 /* JFRWebSocket.m */; };
 		F010115A1F7BCCCC00699669 /* JFRSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = F01011541F7BCC2700699669 /* JFRSecurity.m */; };
 		F010115B1F7BCCCC00699669 /* JFRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = F01011561F7BCC2700699669 /* JFRWebSocket.m */; };
 		F010115C1F7BCCD700699669 /* JFRSecurity.h in Headers */ = {isa = PBXBuildFile; fileRef = F01011551F7BCC2700699669 /* JFRSecurity.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -124,7 +122,7 @@
 		F08E4F651F7AB3850032C8E3 /* VPSocketAck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VPSocketAck.h; path = Source/VPSocketAck.h; sourceTree = "<group>"; };
 		F08E4F661F7AB3850032C8E3 /* VPSocketAck.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VPSocketAck.m; path = Source/VPSocketAck.m; sourceTree = "<group>"; };
 		F08E4F6E1F7ACFEB0032C8E3 /* VPSocketIO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VPSocketIO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F08E4F701F7ACFEB0032C8E3 /* VPSocketIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VPSocketIO.h; sourceTree = "<group>"; };
+		F08E4F701F7ACFEB0032C8E3 /* VPSocketIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VPSocketIO.h; path = ../Source/VPSocketIO.h; sourceTree = "<group>"; };
 		F08E4F711F7ACFEB0032C8E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F08E4F7B1F7AD1030032C8E3 /* VPSocketLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VPSocketLogger.h; path = Source/VPSocketLogger.h; sourceTree = "<group>"; };
 		F08E4F7C1F7AD1030032C8E3 /* VPSocketLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VPSocketLogger.m; path = Source/VPSocketLogger.m; sourceTree = "<group>"; };
@@ -427,10 +425,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F01011591F7BCC2700699669 /* JFRWebSocket.m in Sources */,
 				F06B19381F71466D003E81B1 /* ViewController.m in Sources */,
 				F06B19351F71466D003E81B1 /* AppDelegate.m in Sources */,
-				F01011581F7BCC2700699669 /* JFRSecurity.m in Sources */,
 				F06B19321F71466D003E81B1 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
