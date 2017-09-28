@@ -33,7 +33,7 @@
 
 @required
 
-@property (nonatomic, strong) id<VPSocketEngineClient> client;
+@property (nonatomic, weak) id<VPSocketEngineClient> client;
 @property (nonatomic, readonly) BOOL closed;
 @property (nonatomic, readonly) BOOL connected;
 
