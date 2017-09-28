@@ -25,9 +25,7 @@
 
 -(NSString*)currentCharacter {
     if(_currentIndex >=0 && _currentIndex< _message.length) {
-        unichar character =  [_message characterAtIndex:_currentIndex];
-    
-        return [[NSString alloc] initWithBytes:&character length:sizeof(unichar) encoding:NSUTF8StringEncoding];
+        return [_message substringWithRange: NSMakeRange(_currentIndex, 1)];
     }
     return nil;
     
