@@ -342,7 +342,7 @@ typedef enum : NSUInteger {
     if(![_nsp isEqualToString: @"/"])
     {
         [DefaultSocketLogger.logger log:@"Joining namespace" type:self.logType];
-        [_engine send:@"0\(nsp)" withData: @[]];
+        [_engine send:[NSString stringWithFormat:@"0\%@",_nsp] withData: @[]];
     }
 }
 
@@ -692,7 +692,8 @@ typedef enum : NSUInteger {
             }
         }
         
-        if([[reader currentCharacter] isEqualToString:@"/"]) {
+        NSString *charStr = [reader currentCharacter];
+        if([charStr isEqualToString:namespace]) {
             namespace = [reader readUntilOccurence:@","];
         }
         
