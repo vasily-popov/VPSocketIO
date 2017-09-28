@@ -166,6 +166,7 @@ NSString *const kSocketEventStatusChange       = @"statusChange";
 -(void) disconnect
 {
     [DefaultSocketLogger.logger log:@"Closing socket" type:self.logType];
+    _reconnects = NO;
     [self didDisconnect:@"Disconnect"];
 }
 
