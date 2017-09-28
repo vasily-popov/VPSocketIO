@@ -32,6 +32,14 @@ typedef enum : NSUInteger {
 } VPSocketClientEvent;
 
 
+NSString *const kSocketEventConnect            = @"connect";
+NSString *const kSocketEventDisconnect         = @"disconnect";
+NSString *const kSocketEventError              = @"error";
+NSString *const kSocketEventReconnect          = @"reconnect";
+NSString *const kSocketEventReconnectAttempt   = @"reconnectAttempt";
+NSString *const kSocketEventStatusChange       = @"statusChange";
+
+
 @interface VPSocketIOClient() <VPSocketEngineClient>
 {
     int currentAck;
@@ -184,12 +192,12 @@ typedef enum : NSUInteger {
     _waitingPackets = [[NSMutableArray alloc] init];
     
     
-    eventStrings =@{ @(VPSocketClientEventConnect) : @"connect",
-                     @(VPSocketClientEventDisconnect) : @"disconnect",
-                     @(VPSocketClientEventError) : @"error",
-                     @(VPSocketClientEventReconnect) : @"reconnect",
-                     @(VPSocketClientEventReconnectAttempt) : @"reconnectAttempt",
-                     @(VPSocketClientEventStatusChange) : @"statusChange"};
+    eventStrings =@{ @(VPSocketClientEventConnect)          : kSocketEventConnect,
+                     @(VPSocketClientEventDisconnect)       : kSocketEventDisconnect,
+                     @(VPSocketClientEventError)            : kSocketEventError,
+                     @(VPSocketClientEventReconnect)        : kSocketEventReconnect,
+                     @(VPSocketClientEventReconnectAttempt) : kSocketEventReconnectAttempt,
+                     @(VPSocketClientEventStatusChange)     : kSocketEventStatusChange};
     
     
     statusStrings = @{ @(VPSocketIOClientStatusNotConnected) : @"notconnected",

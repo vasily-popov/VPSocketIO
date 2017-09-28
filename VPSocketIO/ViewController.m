@@ -47,7 +47,9 @@
     
     
     
-    [socket on:@"connect" callback:^(NSArray *array, VPSocketAckEmitter *emitter) {
+    
+    
+    [socket on:kSocketEventConnect callback:^(NSArray *array, VPSocketAckEmitter *emitter) {
         NSLog(@"!!!!socket connected");
     }];
     

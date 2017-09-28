@@ -18,6 +18,15 @@ typedef enum : NSUInteger {
     VPSocketIOClientStatusConnected= 0x4
 } VPSocketIOClientStatus;
 
+
+extern NSString *const kSocketEventConnect;
+extern NSString *const kSocketEventDisconnect;
+extern NSString *const kSocketEventError;
+extern NSString *const kSocketEventReconnect;
+extern NSString *const kSocketEventReconnectAttempt;
+extern NSString *const kSocketEventStatusChange;
+
+
 typedef void (^VPSocketIOVoidHandler)(void);
 typedef void (^VPSocketAnyEventHandler)(VPSocketAnyEvent*event);
 
