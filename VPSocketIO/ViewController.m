@@ -63,17 +63,24 @@
     
 }
 
--(void)socketExample{
-    NSString *urlString = @"http://localhost:8900";
-    
+-(void)socketExample
+{
     ClientSocketLogger*logger = [ClientSocketLogger new];
+
+    NSString *urlString = @"http://localhost:8900";
+    NSDictionary *connectParams = @{@"key":@"value"};
     socket = [[VPSocketIOClient alloc] init:[NSURL URLWithString:urlString]
-                                 withConfig:@{@"log": @YES
+                                 withConfig:@{@"log": @YES,
+                                              @"forcePolling": @NO,
+                                              @"secure": @YES,
+                                              @"forceNew":@YES,
+                                              @"forceWebsockets":@YES,
+                                              @"selfSigned":@YES,
+                                              @"reconnectWait":@1000,
+                                              @"nsp":@"/rooms",
+                                              @"connectParams":connectParams,
                                               @"logger":logger
                                               }];
-    
-    
-    
     
     
     [socket on:kSocketEventConnect callback:^(NSArray *array, VPSocketAckEmitter *emitter) {
