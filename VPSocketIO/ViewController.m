@@ -59,7 +59,7 @@
     
     [socket removeAllHandlers];
     [socket disconnect];
-    socket = nil;
+    self->socket = nil;
     
 }
 
@@ -69,7 +69,7 @@
 
     NSString *urlString = @"http://localhost:8900";
     NSDictionary *connectParams = @{@"key":@"value"};
-    socket = [[VPSocketIOClient alloc] init:[NSURL URLWithString:urlString]
+    self->socket = [[VPSocketIOClient alloc] init:[NSURL URLWithString:urlString]
                                  withConfig:@{@"log": @YES,
                                               @"forcePolling": @NO,
                                               @"secure": @YES,

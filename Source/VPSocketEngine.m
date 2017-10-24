@@ -380,7 +380,6 @@
 -(void)didError:(NSString*)reason
 {
     if(!self.closed) {
-        [DefaultSocketLogger.logger error:reason type:self.logType];
         [client engineDidError:reason];
         [self disconnect:reason];
     }
@@ -519,7 +518,7 @@
 
 -(void) handleClose:(NSString*)reason
 {
-    [client engineDidClose:reason];
+    [self closeOutEngine:reason];
 }
 
 -(void) handleMessage:(NSString*)message
@@ -592,7 +591,7 @@
 {
     if(_connected && _pingInterval > 0) {
         if(_pongsMissed > _pongsMissedMax) {
-            [client engineDidClose:@"Ping timeout"];
+            [self closeOutEngine:@"Ping timeout"];
         }
         else {
             _pongsMissed += 1;
@@ -676,9 +675,6 @@
 
 - (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(nullable NSError *)error
 {
-    if(!self.closed) {
-        [DefaultSocketLogger.logger error:@"Engine URLSession became invalid" type:self.logType];
-    }
     [self didError:@"Engine URLSession became invalid"];
 }
 
@@ -704,11 +700,12 @@
     
     if(_closed)
     {
-        [client engineDidClose:@"Disconnect"];
+        [self closeOutEngine:@"Disconnect"];
     }
     else
     {
-        if(_websocket) {
+        if(_websocket)
+        {
             [self flushProbeWait];
         }
         else
@@ -716,15 +713,12 @@
             _connected = NO;
             _websocket = NO;
             
-            NSString *reason = error.localizedDescription;
-            if(reason.length > 0)
+            NSString *reason = @"Socket Disconnected";
+            if(error.localizedDescription.length > 0)
             {
-                [self didError:reason];
+                reason = error.localizedDescription;
             }
-            else
-            {
-                [client engineDidClose:@"Socket Disconnected"];
-            }
+            [self closeOutEngine:reason];
         }
     }
 }

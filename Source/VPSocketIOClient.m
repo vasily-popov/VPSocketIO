@@ -155,11 +155,13 @@ NSString *const kSocketEventStatusChange       = @"statusChange";
                 {
                     __strong typeof(self) strongSelf = weakSelf;
                     if(strongSelf != nil &&
-                       (strongSelf.status == VPSocketIOClientStatusConnecting || strongSelf.status == VPSocketIOClientStatusNotConnected))
+                       (strongSelf.status == VPSocketIOClientStatusConnecting ||
+                        strongSelf.status == VPSocketIOClientStatusNotConnected))
                     {
-                        strongSelf.status = VPSocketIOClientStatusDisconnected;
-                        [strongSelf.engine disconnect:@"Connect timeout"];
-                        handler();
+                        [strongSelf didDisconnect:@"Connection timeout"];
+                        if(handler) {
+                            handler();
+                        }
                     }
                 }
             });
@@ -213,25 +215,11 @@ NSString *const kSocketEventStatusChange       = @"statusChange";
     statusStrings = @{ @(VPSocketIOClientStatusNotConnected) : @"notconnected",
                        @(VPSocketIOClientStatusDisconnected) : @"disconnected",
                        @(VPSocketIOClientStatusConnecting) : @"connecting",
+                       @(VPSocketIOClientStatusOpened) : @"opened",
                        @(VPSocketIOClientStatusConnected) : @"connected"};
 }
 
 #pragma mark - property
-
--(NSString*)statusToString:(VPSocketIOClientStatus)status
-{
-    switch(status) {
-        case VPSocketIOClientStatusNotConnected:
-            return @"notConnected";
-        case VPSocketIOClientStatusDisconnected:
-            return @"disonnected";
-        case VPSocketIOClientStatusConnecting:
-            return @"connecting";
-        case VPSocketIOClientStatusConnected:
-            return @"connected";
-    }
-    return @"";
-}
 
 -(void)setStatus:(VPSocketIOClientStatus)status
 {
@@ -465,19 +453,33 @@ NSString *const kSocketEventStatusChange       = @"statusChange";
             currentReconnectAttempt += 1;
             [self connect];
             
-            __weak typeof(self) weakSelf = self;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_reconnectWait * NSEC_PER_SEC)), _handleQueue, ^
-            {
-                @autoreleasepool
-                {
-                    __strong typeof(self) strongSelf = weakSelf;
-                    if(strongSelf != nil) {
-                        [strongSelf _tryReconnect];
-                    }
-                }
-            });
+            [self setTimer];
         }
     }
+}
+
+-(void)setTimer
+{
+    __weak typeof(self) weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_reconnectWait * NSEC_PER_SEC)), _handleQueue, ^
+    {
+       @autoreleasepool
+       {
+           __strong typeof(self) strongSelf = weakSelf;
+           if(strongSelf != nil)
+           {
+               if(strongSelf.status != VPSocketIOClientStatusDisconnected &&
+                  strongSelf.status != VPSocketIOClientStatusOpened)
+               {
+                   [strongSelf _tryReconnect];
+               }
+               else if(strongSelf.status != VPSocketIOClientStatusConnected)
+               {
+                   [strongSelf setTimer];
+               }
+           }
+       }
+    });
 }
 
 #pragma mark - VPSocketIOClientProtocol
@@ -497,9 +499,17 @@ NSString *const kSocketEventStatusChange       = @"statusChange";
  isInternalMessage:(BOOL)internalMessage
            withAck:(int)ack
 {
-    if(_status == VPSocketIOClientStatusConnected || internalMessage) {
-        
-        [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Handling event: %@ with data: %@", event, data] type:self.logType];
+    
+    if(_status == VPSocketIOClientStatusConnected || internalMessage)
+    {
+        if([event isEqualToString:kSocketEventError])
+        {
+            [DefaultSocketLogger.logger error:data.firstObject type:self.logType];
+        }
+        else
+        {
+            [DefaultSocketLogger.logger log:[NSString stringWithFormat:@"Handling event: %@ with data: %@", event, data] type:self.logType];
+        }
         
         if(anyHandler) {
             anyHandler([[VPSocketAnyEvent alloc] initWithEvent: event andItems: data]);
@@ -539,7 +549,6 @@ NSString *const kSocketEventStatusChange       = @"statusChange";
 
 -(void)didError:(NSString*)reason {
     
-    [DefaultSocketLogger.logger error:reason type:self.logType];
     [self handleClientEvent:eventStrings[@(VPSocketClientEventError)] withData:@[reason]];
 }
 
@@ -561,13 +570,14 @@ NSString *const kSocketEventStatusChange       = @"statusChange";
 }
 
 -(void) _engineDidError:(NSString*)reason {
-    [DefaultSocketLogger.logger error:reason type:self.logType];
     [self handleClientEvent:eventStrings[@(VPSocketClientEventError)]
                    withData:@[reason]];
 }
 
 -(void) engineDidOpen:(NSString*)reason {
-    [DefaultSocketLogger.logger log:reason type:self.logType];
+    self.status = VPSocketIOClientStatusOpened;
+    [self handleClientEvent:eventStrings[@(VPSocketIOClientStatusOpened)]
+                   withData:@[reason]];
 }
 
 -(void)engineDidClose:(NSString*)reason
@@ -585,22 +595,21 @@ NSString *const kSocketEventStatusChange       = @"statusChange";
     });
 }
 
--(void) _engineDidClose:(NSString*)reason {
-    
+-(void) _engineDidClose:(NSString*)reason
+{
     [_waitingPackets removeAllObjects];
-    if (_status != VPSocketIOClientStatusDisconnected)
-    {
-        self.status = VPSocketIOClientStatusNotConnected;
-    }
-    
     if (_status == VPSocketIOClientStatusDisconnected || !_reconnects)
     {
         [self didDisconnect:reason];
     }
-    else if (!reconnecting)
+    else
     {
-        reconnecting = YES;
-        [self tryReconnect:reason];
+        self.status = VPSocketIOClientStatusNotConnected;
+        if (!reconnecting)
+        {
+            reconnecting = YES;
+            [self tryReconnect:reason];
+        }
     }
 }
 

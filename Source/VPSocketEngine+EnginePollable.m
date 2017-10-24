@@ -45,7 +45,6 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
                  if(error != nil || data == nil || (status/100 != 2))
                  {
                      NSString *errorString = error.localizedDescription.length > 0?error.localizedDescription:@"Error";
-                     [DefaultSocketLogger.logger error:errorString type:@"SocketEnginePolling"];
                      [strongSelf didError:errorString];
                  }
                  else
@@ -168,7 +167,6 @@ typedef void (^EngineURLSessionDataTaskCallBack)(NSData* data, NSURLResponse*res
                      if(error != nil)
                      {
                          NSString *errorString = error.localizedDescription.length > 0?error.localizedDescription:@"Error";
-                         [DefaultSocketLogger.logger error:errorString type:@"SocketEnginePolling"];
                          if (strongSelf.polling)
                          {
                              [strongSelf didError:errorString];

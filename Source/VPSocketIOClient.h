@@ -15,7 +15,8 @@ typedef enum : NSUInteger {
     VPSocketIOClientStatusNotConnected = 0x1,
     VPSocketIOClientStatusDisconnected = 0x2,
     VPSocketIOClientStatusConnecting = 0x3,
-    VPSocketIOClientStatusConnected= 0x4
+    VPSocketIOClientStatusOpened = 0x4,
+    VPSocketIOClientStatusConnected = 0x5
 } VPSocketIOClientStatus;
 
 
