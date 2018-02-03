@@ -226,11 +226,22 @@
             urlPollingComponent.scheme = @"http";
         }
         
-        for (NSString *key in _connectParams.allKeys) {
-            NSString *value = _connectParams[key];
+        for (id key in _connectParams.allKeys) {
             NSString *encodedKey = [key urlEncode];
-            NSString *encodedValue = [value urlEncode];
-            [queryString appendFormat:@"&%@=%@", encodedKey, encodedValue];
+            id value = _connectParams[key];
+            if([value isKindOfClass:[NSString class]]) {
+                NSString *encodedValue = [(NSString*)value urlEncode];
+                [queryString appendFormat:@"&%@=%@", encodedKey, encodedValue];
+            }
+            else if([value isKindOfClass:[NSArray class]]){
+                NSArray *array = value;
+                for (id item in array) {
+                    if([item isKindOfClass:[NSString class]]) {
+                        NSString *encodedValue = [item urlEncode];
+                        [queryString appendFormat:@"&%@=%@", encodedKey, encodedValue];
+                    }
+                }
+            }
         }
         
         urlWebSocketComponent.percentEncodedQuery = [NSString stringWithFormat:@"transport=websocket%@",queryString];
