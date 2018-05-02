@@ -30,18 +30,18 @@ SocketIOClient* socket = [[SocketIOClient alloc] initWithSocketURL:url config:@{
 ### Carthage
 Add these line to your `Cartfile`:
 ```
-github "vascome/vpsocketio" ~> 1.0.3 # Or latest version
+github "vascome/vpsocketio" ~> 1.0.5 # Or latest version
 ```
 
 Run `carthage update --platform ios,macosx`.
 
 ### CocoaPods 1.0.0 or later
-Create `Podfile` and add `pod 'vpsocketio'`:
+Create `Podfile` and add `pod 'VPSocketIO'` (pod files are case sensetive):
 
 ```ruby
 
 target 'MyApp' do
-    pod 'vpsocketio', '~> 1.0.3' # Or latest version
+    pod 'VPSocketIO', '~> 1.0.5' # Or latest version
 end
 ```
 
