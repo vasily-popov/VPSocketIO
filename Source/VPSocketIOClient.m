@@ -515,7 +515,7 @@ NSString *const kSocketEventStatusChange       = @"statusChange";
             anyHandler([[VPSocketAnyEvent alloc] initWithEvent: event andItems: data]);
         }
         
-        for (VPSocketEventHandler *hdl in _handlers)
+        for (VPSocketEventHandler *hdl in [_handlers copy])
         {
             if([hdl.event isEqualToString: event])
             {
